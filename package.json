@@ -7,6 +7,7 @@
     "dev": "node api/chat.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+<<<<<<< HEAD
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rahulbaweja7/Ai-SexDoc-BackEnd.git"
@@ -19,6 +20,11 @@
     "url": "https://github.com/rahulbaweja7/Ai-SexDoc-BackEnd/issues"
   },
   "homepage": "https://github.com/rahulbaweja7/Ai-SexDoc-BackEnd#readme",
+=======
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+>>>>>>> 9e51169 (Finalized backend (Person B) with MongoDB and OpenAI integration)
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
