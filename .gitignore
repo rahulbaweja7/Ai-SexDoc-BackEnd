@@ -3,3 +3,4 @@
 backend-setup-Anay
 node_modules/
 main
+.env.local
