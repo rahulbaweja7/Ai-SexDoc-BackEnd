@@ -1,8 +1,4 @@
 {
-  "name": "ai-sexdoc-backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
     "dev": "node api/chat.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,12 +15,6 @@
     "url": "https://github.com/rahulbaweja7/Ai-SexDoc-BackEnd/issues"
   },
   "homepage": "https://github.com/rahulbaweja7/Ai-SexDoc-BackEnd#readme",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
