@@ -1,4 +1,5 @@
 .env
+.env.example
 backend-setup-Anay
 node_modules/
 main
