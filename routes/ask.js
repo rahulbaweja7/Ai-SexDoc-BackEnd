@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-// Corrected spelling of "req" from "required"
 router.post('/', async (req, res) => {
-  const { userMessage } = req.body;  // Use the same key expected from Postman
+  const { userMessage } = req.body; 
 
-  // Validate input
+  
   if (!userMessage || userMessage.trim() === '') {
     return res.status(400).json({ error: 'userMessage is required' });
   }
