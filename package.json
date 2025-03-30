@@ -1,0 +1,27 @@
+{
+  "scripts": {
+    "dev": "node api/chat.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahulbaweja7/Ai-SexDoc-BackEnd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rahulbaweja7/Ai-SexDoc-BackEnd/issues"
+  },
+  "homepage": "https://github.com/rahulbaweja7/Ai-SexDoc-BackEnd#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongodb": "^6.15.0",
+    "mongoose": "^8.13.1",
+    "multer": "^1.4.5-lts.2",
+    "openai": "^4.90.0"
+  }
+}
