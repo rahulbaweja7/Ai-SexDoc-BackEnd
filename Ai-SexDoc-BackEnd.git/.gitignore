@@ -1,5 +1,6 @@
 .env
-<<<<<<< HEAD
+.env.example
+backend-setup-Anay
 node_modules/
-=======
->>>>>>> 9e51169f3ed4d727a7b61ed8b0f5f2faf5760cc4
+main
+.env.local
