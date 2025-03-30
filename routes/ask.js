@@ -27,6 +27,7 @@ router.post('/', async (req, res) => {
     return res.json({ aiResponse: replyFromAi });
 
   } catch (error) {
+    console.error('There was an error in the /ask route.', error);
     return res.status(500).json({ error: 'Failed to get AI response' });
   }
 });
