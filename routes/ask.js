@@ -24,7 +24,8 @@ router.post('/', async (req, res) => {
 
     const replyFromAi = response.choices[0].message.content;
 
-    return res.json({ aiResponse: replyFromAi });
+    return res.json({ reply: replyFromAi });
+
 
   } catch (error) {
     console.error('There was an error in the /ask route.', error);
