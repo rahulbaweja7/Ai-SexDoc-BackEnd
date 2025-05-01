@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const mongoose = require('mongoose');
 require('dotenv').config();
 
 const connectDatabase = require('./utils/mongodb');
@@ -9,10 +10,15 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-const askRoute = require('./routes/ask');
-app.use('/ask', askRoute);
+connectDatabase();
 
-// Optional root route to confirm backend is running
+// Routes
+const askRoute = require('./routes/ask');
+const authRoutes = require('./routes/auth'); // new
+
+app.use('/ask', askRoute);
+app.use('/auth', authRoutes); // new
+
 app.get("/", (req, res) => {
   res.send("Backend is running!");
 });
