@@ -3,15 +3,24 @@ require('dotenv').config();
 
 async function connectToMongo() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI, {
-      dbName: process.env.MONGODB_DB,
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    const mongoUri = process.env.MONGODB_URI;
+    const mongoDbName = process.env.MONGODB_DB;
+
+    if (!mongoUri) {
+      console.warn('⚠️  MONGODB_URI not set; starting server without a database connection');
+      return;
+    }
+
+    const options = {};
+    if (mongoDbName) {
+      options.dbName = mongoDbName;
+    }
+
+    await mongoose.connect(mongoUri, options);
     console.log('✅ Connected to MongoDB');
   } catch (err) {
     console.error('❌ MongoDB connection error:', err);
-    process.exit(1);
+    console.warn('⚠️  Continuing to run without a database connection');
   }
 }
 
