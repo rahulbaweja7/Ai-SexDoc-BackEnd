@@ -2,9 +2,16 @@ const express = require('express');
 const router = express.Router();
 const { OpenAI } = require("openai");
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+let cachedOpenAIClient = null;
+function getOpenAIClient() {
+  if (cachedOpenAIClient) return cachedOpenAIClient;
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    throw new Error('OPENAI_API_KEY is missing. Set it in your environment or .env file.');
+  }
+  cachedOpenAIClient = new OpenAI({ apiKey });
+  return cachedOpenAIClient;
+}
 
 router.post('/', async (req, res) => {
   const { userMessage } = req.body;
@@ -14,6 +21,7 @@ router.post('/', async (req, res) => {
   }
 
   try {
+    const openai = getOpenAIClient();
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
@@ -29,7 +37,9 @@ router.post('/', async (req, res) => {
 
   } catch (error) {
     console.error('There was an error in the /ask route.', error);
-    return res.status(500).json({ error: 'Failed to get AI response' });
+    const message = error && error.message ? error.message : 'Failed to get AI response';
+    const status = message.includes('OPENAI_API_KEY') ? 500 : 500;
+    return res.status(status).json({ error: message });
   }
 });
 
