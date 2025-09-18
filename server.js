@@ -22,6 +22,17 @@ app.use(cors({
     if (!origin || allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
+    if (process.env.NODE_ENV !== 'production') {
+      try {
+        const url = new URL(origin);
+        const isLocalhost = url.hostname === 'localhost' || url.hostname === '127.0.0.1';
+        if (isLocalhost) {
+          return callback(null, true);
+        }
+      } catch (e) {
+        // ignore URL parse errors and fall through to rejection
+      }
+    }
     return callback(new Error('Not allowed by CORS'));
   },
   credentials: true
