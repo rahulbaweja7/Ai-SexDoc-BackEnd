@@ -13,7 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 3001; 
 
 // CORS: support multiple origins via FRONTEND_ORIGINS (comma-separated)
-const allowedOrigins = (process.env.FRONTEND_ORIGINS || process.env.FRONTEND_URL || 'http://localhost:3000,http://localhost:5173')
+const allowedOrigins = (process.env.FRONTEND_ORIGINS || process.env.FRONTEND_URL || 'http://localhost:3000,http://localhost:5173,http://localhost:5500')
   .split(',')
   .map(o => o.trim());
 
@@ -51,6 +51,7 @@ connectDatabase();
 
 // API routes
 app.use('/ask', askRoute);
+app.use('/chat', askRoute);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
