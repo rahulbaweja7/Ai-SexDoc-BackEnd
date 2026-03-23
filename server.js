@@ -8,6 +8,7 @@ dotenv.config();
 const connectDatabase = require('./utils/mongodb');
 const askRoute = require('./routes/ask');
 const authRoute = require('./routes/auth');
+const ttsRoute = require('./routes/tts');
 
 const app = express();
 const PORT = process.env.PORT || 3001; 
@@ -70,6 +71,15 @@ const chatLimiter = rateLimit({
 app.use('/auth', authLimiter, authRoute);
 app.use('/ask', chatLimiter, askRoute);
 app.use('/chat', chatLimiter, askRoute);
+
+const ttsLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 20,
+  message: { error: 'Too many TTS requests, slow down.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use('/tts', ttsLimiter, ttsRoute);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
