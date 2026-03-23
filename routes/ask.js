@@ -14,7 +14,7 @@ function getClient() {
 const SYSTEM_PROMPT = `You are SERA — a warm, non-judgmental, and knowledgeable sexual health guide. You give honest, research-informed answers about sexual health, relationships, contraception, STIs, anatomy, and intimacy. You speak like a trusted, well-informed friend — never clinical or cold, never preachy or judgmental. Keep responses focused and conversational. If someone seems distressed, acknowledge their feelings before giving information.`;
 
 router.post('/', async (req, res) => {
-  const { userMessage } = req.body;
+  const { userMessage, history } = req.body;
   if (!userMessage?.trim()) return res.status(400).json({ error: 'userMessage is required' });
 
   let openai;
@@ -29,12 +29,21 @@ router.post('/', async (req, res) => {
   res.setHeader('Connection', 'keep-alive');
   res.setHeader('X-Accel-Buffering', 'no');
 
+  // Build messages: system + prior conversation + current message
+  const priorMessages = Array.isArray(history)
+    ? history.slice(-20).map(m => ({          // cap at last 20 to avoid token limits
+        role: m.sender === 'You' ? 'user' : 'assistant',
+        content: m.content,
+      }))
+    : [];
+
   try {
     const stream = await openai.chat.completions.create({
       model: 'llama-3.3-70b-versatile',
       stream: true,
       messages: [
         { role: 'system', content: SYSTEM_PROMPT },
+        ...priorMessages,
         { role: 'user', content: userMessage },
       ],
     });

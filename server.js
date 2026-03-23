@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-// Removed session, passport, and auth as signup/login are being removed
 const path = require('path');
+const { rateLimit } = require('express-rate-limit');
 dotenv.config();
 
 const connectDatabase = require('./utils/mongodb');
@@ -49,10 +49,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Connect to MongoDB
 connectDatabase();
 
+// Rate limiting — protect Groq API key from abuse
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20,
+  message: { error: 'Too many requests, please try again later.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+const chatLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 30,             // 30 messages per minute per IP
+  message: { error: 'Slow down — too many messages. Try again in a minute.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 // API routes
-app.use('/auth', authRoute);
-app.use('/ask', askRoute);
-app.use('/chat', askRoute);
+app.use('/auth', authLimiter, authRoute);
+app.use('/ask', chatLimiter, askRoute);
+app.use('/chat', chatLimiter, askRoute);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
