@@ -8,17 +8,30 @@ const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '829177934485-qsa66r4mn
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 
 // POST /auth/google
-// Receives a Google credential (ID token), verifies it, finds or creates user, returns JWT
+// Accepts either a Google ID token (credential) or an access token + userInfo
 router.post('/google', async (req, res) => {
-  const { credential } = req.body;
-  if (!credential) return res.status(400).json({ message: 'Missing credential' });
+  const { credential, accessToken, userInfo } = req.body;
+  if (!credential && !accessToken) return res.status(400).json({ message: 'Missing credential' });
 
   try {
-    const ticket = await client.verifyIdToken({
-      idToken: credential,
-      audience: GOOGLE_CLIENT_ID,
-    });
-    const { sub: googleId, email, name, picture } = ticket.getPayload();
+    let googleId, email, name, picture;
+
+    if (accessToken && userInfo) {
+      // Access token flow: verify by calling Google's userinfo endpoint
+      const infoRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      if (!infoRes.ok) return res.status(401).json({ message: 'Invalid Google access token' });
+      const info = await infoRes.json();
+      googleId = info.sub;
+      email = info.email;
+      name = info.name;
+      picture = info.picture;
+    } else {
+      // ID token flow (legacy)
+      const ticket = await client.verifyIdToken({ idToken: credential, audience: GOOGLE_CLIENT_ID });
+      ({ sub: googleId, email, name, picture } = ticket.getPayload());
+    }
 
     // Find or create user
     let user = await User.findOne({ googleId });
