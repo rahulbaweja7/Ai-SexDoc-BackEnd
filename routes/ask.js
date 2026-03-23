@@ -13,8 +13,18 @@ function getClient() {
 
 const SYSTEM_PROMPT = `You are SERA — a warm, non-judgmental sexual health guide. Answer like a knowledgeable friend: honest, concise, never preachy. Keep responses short and conversational — 2 to 4 sentences unless the question genuinely needs more detail. Use plain language, no unnecessary lists or headers. If someone seems distressed, acknowledge their feelings first. Topics: sexual health, relationships, contraception, STIs, anatomy, intimacy.`;
 
+function buildProfileContext(profile) {
+  if (!profile || !Object.keys(profile).length) return '';
+  const parts = [];
+  if (profile.name) parts.push(`The user's name is ${profile.name} — use their name naturally occasionally.`);
+  if (profile.identity && profile.identity !== 'prefer not to say') parts.push(`They identify as ${profile.identity}.`);
+  if (profile.age && profile.age !== 'prefer not to say') parts.push(`They are ${profile.age} years old.`);
+  if (profile.topic) parts.push(`They said they're most looking for support with: ${profile.topic}.`);
+  return parts.length ? '\n\nUser profile: ' + parts.join(' ') : '';
+}
+
 router.post('/', async (req, res) => {
-  const { userMessage, history } = req.body;
+  const { userMessage, history, profile } = req.body;
   if (!userMessage?.trim()) return res.status(400).json({ error: 'userMessage is required' });
 
   let openai;
@@ -42,7 +52,7 @@ router.post('/', async (req, res) => {
       model: 'llama-3.3-70b-versatile',
       stream: true,
       messages: [
-        { role: 'system', content: SYSTEM_PROMPT },
+        { role: 'system', content: SYSTEM_PROMPT + buildProfileContext(profile) },
         ...priorMessages,
         { role: 'user', content: userMessage },
       ],
