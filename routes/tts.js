@@ -3,8 +3,8 @@ const router = express.Router();
 
 // ElevenLabs voice IDs
 const VOICES = {
-  female: '21m00Tcm4TlvDq8ikWAM', // Rachel — warm, natural female
-  male:   'TxGEqnHWrfWFTfGW9XjX', // Josh — deep, natural male
+  female: 'EXAVITQu4vr4xnSDxMaL', // Bella — warm, very natural female
+  male:   'pNInz6obpgDQGcFmaJgB',  // Adam — deep, natural male
 };
 
 router.post('/', async (req, res) => {
@@ -15,6 +15,7 @@ router.post('/', async (req, res) => {
   if (!apiKey) return res.status(500).json({ error: 'TTS not configured' });
 
   const voiceId = VOICES[voice] || VOICES.female;
+  console.log('[TTS] request — voice:', voice, 'voiceId:', voiceId, 'textLen:', text.length);
 
   try {
     const upstream = await fetch(
@@ -28,18 +29,20 @@ router.post('/', async (req, res) => {
         },
         body: JSON.stringify({
           text: text.slice(0, 1000),
-          model_id: 'eleven_turbo_v2',
-          voice_settings: { stability: 0.45, similarity_boost: 0.75, style: 0.35, use_speaker_boost: true },
+          model_id: 'eleven_multilingual_v2',
+          voice_settings: { stability: 0.40, similarity_boost: 0.80, style: 0.45, use_speaker_boost: true },
         }),
       }
     );
 
     if (!upstream.ok) {
       const err = await upstream.text();
+      console.error('[TTS] ElevenLabs error', upstream.status, err);
       return res.status(upstream.status).json({ error: err });
     }
 
     const audioBuffer = await upstream.arrayBuffer();
+    console.log('[TTS] success — bytes:', audioBuffer.byteLength);
     res.setHeader('Content-Type', 'audio/mpeg');
     res.setHeader('Cache-Control', 'no-store');
     res.send(Buffer.from(audioBuffer));
