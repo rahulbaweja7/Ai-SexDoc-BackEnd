@@ -7,7 +7,7 @@ dotenv.config();
 
 const connectDatabase = require('./utils/mongodb');
 const askRoute = require('./routes/ask');
-// Removed auth routes import
+const authRoute = require('./routes/auth');
 
 const app = express();
 const PORT = process.env.PORT || 3001; 
@@ -50,6 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 connectDatabase();
 
 // API routes
+app.use('/auth', authRoute);
 app.use('/ask', askRoute);
 app.use('/chat', askRoute);
 

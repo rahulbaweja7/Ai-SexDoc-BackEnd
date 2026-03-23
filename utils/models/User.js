@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
   name: { type: String },
   picture: { type: String }, // Profile picture URL
   provider: { type: String, enum: ['local', 'google'], default: 'local' },
+  role: { type: String, enum: ['user', 'admin'], default: 'user' },
   createdAt: { type: Date, default: Date.now }
 });
 
