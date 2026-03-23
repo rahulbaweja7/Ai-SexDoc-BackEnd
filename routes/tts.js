@@ -1,18 +1,24 @@
 const express = require('express');
 const router = express.Router();
 
-const VOICE_ID = 'EXAVITQu4vr4xnSDxMaL'; // ElevenLabs "Bella" — warm, natural female voice
+// ElevenLabs voice IDs
+const VOICES = {
+  female: '21m00Tcm4TlvDq8ikWAM', // Rachel — warm, natural female
+  male:   'TxGEqnHWrfWFTfGW9XjX', // Josh — deep, natural male
+};
 
 router.post('/', async (req, res) => {
-  const { text } = req.body;
+  const { text, voice = 'female' } = req.body;
   if (!text?.trim()) return res.status(400).json({ error: 'text is required' });
 
   const apiKey = process.env.ELEVENLABS_API_KEY;
   if (!apiKey) return res.status(500).json({ error: 'TTS not configured' });
 
+  const voiceId = VOICES[voice] || VOICES.female;
+
   try {
     const upstream = await fetch(
-      `https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`,
+      `https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,
       {
         method: 'POST',
         headers: {
@@ -21,7 +27,7 @@ router.post('/', async (req, res) => {
           Accept: 'audio/mpeg',
         },
         body: JSON.stringify({
-          text: text.slice(0, 1000), // guard against huge payloads
+          text: text.slice(0, 1000),
           model_id: 'eleven_turbo_v2',
           voice_settings: { stability: 0.45, similarity_boost: 0.75, style: 0.35, use_speaker_boost: true },
         }),
@@ -33,15 +39,10 @@ router.post('/', async (req, res) => {
       return res.status(upstream.status).json({ error: err });
     }
 
+    const audioBuffer = await upstream.arrayBuffer();
     res.setHeader('Content-Type', 'audio/mpeg');
     res.setHeader('Cache-Control', 'no-store');
-    upstream.body.pipeTo(
-      new WritableStream({
-        write(chunk) { res.write(chunk); },
-        close() { res.end(); },
-        abort(err) { res.destroy(err); },
-      })
-    );
+    res.send(Buffer.from(audioBuffer));
   } catch (err) {
     console.error('[TTS]', err.message);
     res.status(500).json({ error: err.message });
