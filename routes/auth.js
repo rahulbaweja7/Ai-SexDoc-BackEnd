@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../utils/models/User');
 
 const router = express.Router();
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '829177934485-qsa66r4mnv6rdu6sho38pfmf1h51grju.apps.googleusercontent.com';
+const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 
 // POST /auth/google
 // Receives a Google credential (ID token), verifies it, finds or creates user, returns JWT
@@ -15,7 +16,7 @@ router.post('/google', async (req, res) => {
   try {
     const ticket = await client.verifyIdToken({
       idToken: credential,
-      audience: process.env.GOOGLE_CLIENT_ID,
+      audience: GOOGLE_CLIENT_ID,
     });
     const { sub: googleId, email, name, picture } = ticket.getPayload();
 
