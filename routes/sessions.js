@@ -19,7 +19,7 @@ function requireAuth(req, res, next) {
 // GET /sessions — list all sessions for the user (title + metadata, no messages)
 router.get('/', requireAuth, async (req, res) => {
   try {
-    const sessions = await Session.find({ userId: req.user.id })
+    const sessions = await Session.find({ userId: req.user.userId })
       .select('title createdAt updatedAt')
       .sort({ updatedAt: -1 })
       .limit(100);
@@ -33,7 +33,7 @@ router.get('/', requireAuth, async (req, res) => {
 router.post('/', requireAuth, async (req, res) => {
   try {
     const { title } = req.body;
-    const session = await Session.create({ userId: req.user.id, title: title || 'New chat' });
+    const session = await Session.create({ userId: req.user.userId, title: title || 'New chat' });
     res.json({ id: session._id, title: session.title, createdAt: session.createdAt, updatedAt: session.updatedAt });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -43,7 +43,7 @@ router.post('/', requireAuth, async (req, res) => {
 // GET /sessions/:id — get a session with all its messages
 router.get('/:id', requireAuth, async (req, res) => {
   try {
-    const session = await Session.findOne({ _id: req.params.id, userId: req.user.id });
+    const session = await Session.findOne({ _id: req.params.id, userId: req.user.userId });
     if (!session) return res.status(404).json({ error: 'Not found' });
     res.json(session);
   } catch (err) {
@@ -56,7 +56,7 @@ router.patch('/:id', requireAuth, async (req, res) => {
   try {
     const { title } = req.body;
     const session = await Session.findOneAndUpdate(
-      { _id: req.params.id, userId: req.user.id },
+      { _id: req.params.id, userId: req.user.userId },
       { title, updatedAt: Date.now() },
       { new: true }
     );
@@ -70,7 +70,7 @@ router.patch('/:id', requireAuth, async (req, res) => {
 // DELETE /sessions/:id — delete a session
 router.delete('/:id', requireAuth, async (req, res) => {
   try {
-    const result = await Session.findOneAndDelete({ _id: req.params.id, userId: req.user.id });
+    const result = await Session.findOneAndDelete({ _id: req.params.id, userId: req.user.userId });
     if (!result) return res.status(404).json({ error: 'Not found' });
     res.json({ success: true });
   } catch (err) {
@@ -84,7 +84,7 @@ router.post('/:id/messages', requireAuth, async (req, res) => {
     const { sender, content } = req.body;
     if (!sender || !content) return res.status(400).json({ error: 'sender and content required' });
 
-    const session = await Session.findOne({ _id: req.params.id, userId: req.user.id });
+    const session = await Session.findOne({ _id: req.params.id, userId: req.user.userId });
     if (!session) return res.status(404).json({ error: 'Not found' });
 
     session.messages.push({ sender, content });
@@ -106,7 +106,7 @@ router.post('/:id/messages/bulk', requireAuth, async (req, res) => {
     const { messages } = req.body;
     if (!Array.isArray(messages)) return res.status(400).json({ error: 'messages array required' });
 
-    const session = await Session.findOne({ _id: req.params.id, userId: req.user.id });
+    const session = await Session.findOne({ _id: req.params.id, userId: req.user.userId });
     if (!session) return res.status(404).json({ error: 'Not found' });
 
     session.messages = messages.map(m => ({ sender: m.sender, content: m.content }));
