@@ -10,6 +10,7 @@ const askRoute = require('./routes/ask');
 const authRoute = require('./routes/auth');
 const ttsRoute = require('./routes/tts');
 const sessionsRoute = require('./routes/sessions');
+const feedbackRoute = require('./routes/feedback');
 
 const app = express();
 const PORT = process.env.PORT || 3001; 
@@ -82,6 +83,7 @@ const ttsLimiter = rateLimit({
 });
 app.use('/tts', ttsLimiter, ttsRoute);
 app.use('/sessions', sessionsRoute);
+app.use('/feedback', feedbackRoute);
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));

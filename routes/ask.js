@@ -1,6 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const { OpenAI } = require("openai");
+const jwt = require('jsonwebtoken');
+const { retrieveRelevantChunks, formatChunksAsContext } = require('../utils/retrieve');
+const logger = require('../utils/logger');
+
+const JWT_SECRET = process.env.JWT_SECRET || 'sera_jwt_secret_change_before_deploy';
+
+// Optional auth — attaches req.user if token present, but does not block unauthenticated requests
+// This allows logged-out users to still chat, while logged-in users get their profile injected
+function optionalAuth(req, _res, next) {
+  const auth = req.headers.authorization;
+  if (auth?.startsWith('Bearer ')) {
+    try { req.user = jwt.verify(auth.slice(7), JWT_SECRET); } catch {}
+  }
+  next();
+}
 
 let cachedClient = null;
 function getClient() {
@@ -23,9 +38,12 @@ function buildProfileContext(profile) {
   return parts.length ? '\n\nUser profile: ' + parts.join(' ') : '';
 }
 
-router.post('/', async (req, res) => {
+router.post('/', optionalAuth, async (req, res) => {
   const { userMessage, history, profile } = req.body;
   if (!userMessage?.trim()) return res.status(400).json({ error: 'userMessage is required' });
+
+  const startMs = Date.now();
+  const userId = req.user?.userId || 'anonymous';
 
   let openai;
   try {
@@ -39,34 +57,52 @@ router.post('/', async (req, res) => {
   res.setHeader('Connection', 'keep-alive');
   res.setHeader('X-Accel-Buffering', 'no');
 
-  // Build messages: system + prior conversation + current message
   const priorMessages = Array.isArray(history)
-    ? history.slice(-20).map(m => ({          // cap at last 20 to avoid token limits
+    ? history.slice(-20).map(m => ({
         role: m.sender === 'You' ? 'user' : 'assistant',
         content: m.content,
       }))
     : [];
 
   try {
+    const chunks = await retrieveRelevantChunks(userMessage);
+    const ragContext = formatChunksAsContext(chunks);
+
+    logger.info('/ask', {
+      userId,
+      ragChunks: chunks.length,
+      ragSources: chunks.map(c => c.source),
+      historyLength: priorMessages.length,
+      messagePreview: userMessage.slice(0, 60),
+    });
+
     const stream = await openai.chat.completions.create({
       model: 'llama-3.3-70b-versatile',
       stream: true,
       messages: [
-        { role: 'system', content: SYSTEM_PROMPT + buildProfileContext(profile) },
+        { role: 'system', content: SYSTEM_PROMPT + buildProfileContext(profile) + ragContext },
         ...priorMessages,
         { role: 'user', content: userMessage },
       ],
     });
 
+    let tokenCount = 0;
     for await (const chunk of stream) {
       const token = chunk.choices[0]?.delta?.content;
-      if (token) res.write(`data: ${JSON.stringify({ token })}\n\n`);
+      if (token) { res.write(`data: ${JSON.stringify({ token })}\n\n`); tokenCount++; }
     }
+
+    logger.info('/ask:complete', {
+      userId,
+      latencyMs: Date.now() - startMs,
+      tokensStreamed: tokenCount,
+      ragChunks: chunks.length,
+    });
 
     res.write('data: [DONE]\n\n');
     res.end();
   } catch (err) {
-    console.error('Error in /ask:', err);
+    logger.error('/ask', { userId, error: err.message, latencyMs: Date.now() - startMs });
     res.write(`data: ${JSON.stringify({ error: err.message || 'Failed to get AI response' })}\n\n`);
     res.end();
   }
