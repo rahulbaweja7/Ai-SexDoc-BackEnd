@@ -85,6 +85,15 @@ app.use('/tts', ttsLimiter, ttsRoute);
 app.use('/sessions', sessionsRoute);
 app.use('/feedback', feedbackRoute);
 
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    env: process.env.NODE_ENV || 'development',
+  });
+});
+
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
