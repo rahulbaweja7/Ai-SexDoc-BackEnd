@@ -5,7 +5,10 @@ const jwt = require('jsonwebtoken');
 const { retrieve, formatChunksAsContext } = require('../utils/retrieve');
 const { isEmergency, isMultiPart, splitParts, factLookup } = require('../agent/tools');
 const { safetyCheck, getCrisisReply } = require('../agent/guardrail');
+const { recordTrace, costOf } = require('../utils/trace');
 const logger = require('../utils/logger');
+
+const GEN_MODEL = 'llama-3.3-70b-versatile';
 
 const JWT_SECRET = process.env.JWT_SECRET; // validated at startup in server.js
 
@@ -67,11 +70,13 @@ router.post('/', optionalAuth, async (req, res) => {
     : [];
 
   // Stream a ready-made reply (used for the no-LLM decline/emergency routes).
-  function streamCanned(route, text) {
+  function streamCanned(route, text, extra = {}) {
     res.write(`data: ${JSON.stringify({ token: text })}\n\n`);
     res.write('data: [DONE]\n\n');
     res.end();
-    logger.info('/ask:route', { userId, route, latencyMs: Date.now() - startMs });
+    const totalMs = Date.now() - startMs;
+    logger.info('/ask:route', { userId, route, latencyMs: totalMs });
+    recordTrace({ route, totalMs, ...extra });
   }
 
   try {
@@ -81,11 +86,19 @@ router.post('/', optionalAuth, async (req, res) => {
     // ── Agent step 2: retrieve + safety layer 2 (LLM guardrail) in parallel ──
     // The guardrail catches crisis intent the keywords miss ("i don't want to be
     // here anymore"). Running it alongside retrieval hides its latency.
+    const retrievalStart = Date.now();
     const [retrieved, safety] = await Promise.all([
       retrieve(userMessage),
       safetyCheck(userMessage),
     ]);
-    if (safety.emergency) return streamCanned(`emergency:${safety.type}`, getCrisisReply(safety.type));
+    const retrievalMs = Date.now() - retrievalStart;
+    const guardrailCost = costOf(safety.model, safety.usage?.prompt_tokens, safety.usage?.completion_tokens);
+
+    if (safety.emergency) {
+      return streamCanned(`emergency:${safety.type}`, getCrisisReply(safety.type), {
+        guardrailType: safety.type, retrievalMs, costUsd: guardrailCost,
+      });
+    }
     let chunks = retrieved;
 
     // ── Agent step 3: decompose multi-part questions (retrieve each part) ──
@@ -124,10 +137,12 @@ router.post('/', optionalAuth, async (req, res) => {
       messagePreview: userMessage.slice(0, 60),
     });
 
-    // ── Agent step 6: stream the answer ──
+    // ── Agent step 6: stream the answer (include_usage → capture token counts) ──
+    const genStart = Date.now();
     const stream = await openai.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
+      model: GEN_MODEL,
       stream: true,
+      stream_options: { include_usage: true },
       messages: [
         { role: 'system', content: SYSTEM_PROMPT + buildProfileContext(profile) + ragContext + toolContext + scopeInstruction },
         ...priorMessages,
@@ -136,10 +151,13 @@ router.post('/', optionalAuth, async (req, res) => {
     });
 
     let tokenCount = 0;
+    let usage = null;
     for await (const chunk of stream) {
       const token = chunk.choices[0]?.delta?.content;
       if (token) { res.write(`data: ${JSON.stringify({ token })}\n\n`); tokenCount++; }
+      if (chunk.usage) usage = chunk.usage; // final chunk carries usage
     }
+    const generationMs = Date.now() - genStart;
 
     logger.info('/ask:complete', {
       userId,
@@ -150,6 +168,23 @@ router.post('/', optionalAuth, async (req, res) => {
 
     res.write('data: [DONE]\n\n');
     res.end();
+
+    // Fire-and-forget trace (no question/answer text stored — privacy).
+    const genCost = costOf(GEN_MODEL, usage?.prompt_tokens, usage?.completion_tokens);
+    recordTrace({
+      route: noGrounding ? 'answer:no-source' : 'answer',
+      model: GEN_MODEL,
+      ragChunks: chunks.length,
+      ragSources: [...new Set(chunks.map(c => c.source))],
+      toolFacts: facts.length,
+      guardrailType: 'none',
+      promptTokens: usage?.prompt_tokens || 0,
+      completionTokens: usage?.completion_tokens || 0,
+      costUsd: genCost + guardrailCost,
+      retrievalMs,
+      generationMs,
+      totalMs: Date.now() - startMs,
+    });
   } catch (err) {
     logger.error('/ask', { userId, error: err.message, latencyMs: Date.now() - startMs });
     res.write(`data: ${JSON.stringify({ error: err.message || 'Failed to get AI response' })}\n\n`);

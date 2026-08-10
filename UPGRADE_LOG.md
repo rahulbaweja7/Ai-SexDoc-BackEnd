@@ -19,6 +19,8 @@ Repo: `Ai-SexDoc-BackEnd` · all work pushed to `origin/main`.
 | Out-of-scope junk chunks pulled in | 3 per question | **0** | Phase 2 |
 | Agent routing accuracy | n/a | **97.5%** | Phase 3 |
 | Safety routing (decline + emergency) | n/a | **100%** | Phase 3 |
+| Crisis-detection recall (keyword → +guardrail) | 25% | **100%** | Phase 4 |
+| Per-request tracing / cost / dashboard | none | ✅ live | Phase 4 |
 
 ---
 
@@ -141,12 +143,33 @@ for medical). Fail-open so a classifier hiccup can never take the chat down.
 (indirect "hard" cases **0% → 100%**), benign false-positive rate **0%**. Live in
 `/ask` as safety layer 2 behind the keyword rule.
 
+## Phase 4 (rest) — Observability  (`utils/trace.js`, `routes/stats.js`, `public/dashboard.html`)
+
+Per-request tracing + cost tracking, then a live dashboard.
+
+- **Trace model** (`utils/models/Trace.js`): one row per `/ask` request with route,
+  sources, tokens, per-stage latency, cost, guardrail type. **Privacy: no question or
+  answer text is stored** — only routing/performance/cost metadata. 30-day TTL so the
+  collection stays bounded.
+- **Token capture**: `/ask` streams with `stream_options.include_usage`, so real prompt/
+  completion token counts are recorded even on the streaming path; cost computed per model
+  (70b generation + 8b guardrail) in `utils/trace.costOf`.
+- **`GET /stats`**: aggregates — totals, last-24h, requests-by-route, tokens, cost, avg
+  latency, emergency-escalation count, and the 20 most recent traces.
+- **Dashboard** (`/dashboard.html`): auto-refreshing internal page (stat cards, route
+  breakdown, recent-requests table). Self-contained, theme-aware, no external deps.
+
+`recordTrace` is fire-and-forget (never blocks the response; drops silently if the DB is
+down). Verified end-to-end: 5 mixed requests → correct per-route counts, token/cost totals,
+and escalation count.
+
 ## Still to do
 
-- **Phase 4 (rest) — Observability:** per-request tracing (chunks, prompt, tokens,
-  latency), token-cost tracking, a small dashboard.
 - **Phase 5 — Redeploy + CI:** redeploy the upgraded backend; run the eval suite on every
   push and fail the build if faithfulness/retrieval scores regress.
+- **Optional:** unify the `/agent` graph + eval routing with the live `/ask` behavior
+  (they diverged when `/ask` moved to model-driven scope handling); gate `/stats` +
+  `/dashboard` behind admin if desired.
 - **Housekeeping:** rotate previously-exposed secrets; `node_modules` is committed to the
   repo (pre-existing) and could be untracked.
 - **Finish the Phase 2 answer-quality pass** on the 15 questions skipped when the Groq

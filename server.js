@@ -21,6 +21,7 @@ const ttsRoute = require('./routes/tts');
 const sessionsRoute = require('./routes/sessions');
 const feedbackRoute = require('./routes/feedback');
 const agentRoute = require('./routes/agent');
+const statsRoute = require('./routes/stats');
 
 const app = express();
 const PORT = process.env.PORT || 3001; 
@@ -96,6 +97,7 @@ const ttsLimiter = rateLimit({
 app.use('/tts', ttsLimiter, ttsRoute);
 app.use('/sessions', sessionsRoute);
 app.use('/feedback', feedbackRoute);
+app.use('/stats', statsRoute);
 
 app.get('/health', (req, res) => {
   res.json({

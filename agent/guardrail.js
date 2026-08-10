@@ -68,11 +68,11 @@ async function safetyCheck(text) {
       ],
     });
     const parsed = JSON.parse(res.choices[0]?.message?.content || '{}');
-    return { emergency: parsed.emergency === true, type: parsed.type || 'none' };
+    return { emergency: parsed.emergency === true, type: parsed.type || 'none', usage: res.usage || {}, model: GUARD_MODEL };
   } catch (err) {
     // Fail open — never block the chat on a classifier hiccup.
     console.warn('[guardrail] safetyCheck failed, failing open:', err.message);
-    return { emergency: false, type: 'none', error: err.message };
+    return { emergency: false, type: 'none', error: err.message, usage: {}, model: GUARD_MODEL };
   }
 }
 

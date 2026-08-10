@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SERA · Observability</title>
+<style>
+  :root { color-scheme: dark; --bg:#0e0e10; --card:#17171a; --line:#26262b; --fg:#e7e7ea; --muted:#8a8a92; --accent:#ff6b6b; --ok:#34d399; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; }
+  .wrap { max-width:1000px; margin:0 auto; padding:28px 20px 60px; }
+  header { display:flex; align-items:baseline; gap:12px; margin-bottom:24px; }
+  h1 { font-size:20px; margin:0; letter-spacing:-0.01em; }
+  .sub { color:var(--muted); font-size:12px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:24px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; }
+  .card .label { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:0.04em; }
+  .card .value { font-size:26px; font-weight:650; margin-top:6px; letter-spacing:-0.02em; }
+  .card .value.accent { color:var(--accent); }
+  .card .sub2 { color:var(--muted); font-size:11px; margin-top:3px; }
+  h2 { font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:0.04em; margin:24px 0 10px; }
+  .bar { display:flex; align-items:center; gap:10px; margin:6px 0; }
+  .bar .name { width:150px; font-size:12px; color:var(--fg); flex-shrink:0; }
+  .bar .track { flex:1; height:8px; background:#222228; border-radius:99px; overflow:hidden; }
+  .bar .fill { height:100%; background:var(--accent); border-radius:99px; }
+  .bar .n { width:44px; text-align:right; font-size:12px; color:var(--muted); }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  th,td { text-align:left; padding:7px 10px; border-bottom:1px solid var(--line); white-space:nowrap; }
+  th { color:var(--muted); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:0.03em; }
+  td.route { font-weight:600; }
+  .tag { display:inline-block; padding:1px 7px; border-radius:99px; font-size:11px; background:#222228; color:var(--muted); }
+  .tag.em { background:rgba(255,107,107,0.15); color:var(--accent); }
+  .scroll { overflow-x:auto; border:1px solid var(--line); border-radius:14px; }
+  .empty { color:var(--muted); padding:30px; text-align:center; }
+  .foot { color:var(--muted); font-size:11px; margin-top:16px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>SERA · Observability</h1>
+    <span class="sub" id="status">loading…</span>
+  </header>
+  <div id="content"></div>
+  <p class="foot">Auto-refreshes every 10s. No user questions or answers are stored — only routing, performance, and cost metadata.</p>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const money = (n) => '$' + (n || 0).toFixed(4);
+const ms = (n) => Math.round(n || 0) + 'ms';
+
+function routeTag(r) {
+  const em = /^emergency/.test(r);
+  return '<span class="tag' + (em ? ' em' : '') + '">' + r + '</span>';
+}
+
+async function load() {
+  try {
+    const d = await fetch('/stats').then(r => r.json());
+    if (!d.db) { $('status').textContent = 'no database'; $('content').innerHTML = '<div class="empty">No database connection — traces unavailable.</div>'; return; }
+    $('status').textContent = 'live · ' + new Date().toLocaleTimeString();
+
+    const cards = [
+      ['Requests (total)', d.total, ''],
+      ['Requests (24h)', d.last24h, ''],
+      ['Emergency escalations', d.escalations, 'safety routing', true],
+      ['Cost (total)', money(d.cost.total), money(d.cost.last24h) + ' last 24h'],
+      ['Tokens (total)', (d.tokens.total || 0).toLocaleString(), (d.tokens.last24h || 0).toLocaleString() + ' last 24h'],
+      ['Avg latency', ms(d.latency.avgTotalMs), ms(d.latency.avgGenMs) + ' generation'],
+    ].map(([label, value, sub2, accent]) =>
+      '<div class="card"><div class="label">' + label + '</div><div class="value' + (accent ? ' accent' : '') + '">' + value + '</div>' + (sub2 ? '<div class="sub2">' + sub2 + '</div>' : '') + '</div>'
+    ).join('');
+
+    const maxRoute = Math.max(1, ...d.byRoute.map(r => r.count));
+    const routes = d.byRoute.length ? d.byRoute.map(r =>
+      '<div class="bar"><div class="name">' + r.route + '</div><div class="track"><div class="fill" style="width:' + (r.count / maxRoute * 100) + '%"></div></div><div class="n">' + r.count + '</div></div>'
+    ).join('') : '<div class="empty">No requests yet.</div>';
+
+    const rows = d.recent.length ? d.recent.map(t =>
+      '<tr><td class="route">' + routeTag(t.route || '—') + '</td>' +
+      '<td>' + ((t.ragSources || []).join(', ') || '—') + '</td>' +
+      '<td>' + ((t.promptTokens || 0) + (t.completionTokens || 0)) + '</td>' +
+      '<td>' + money(t.costUsd || 0) + '</td>' +
+      '<td>' + ms(t.totalMs) + '</td>' +
+      '<td>' + (t.guardrailType && t.guardrailType !== 'none' ? t.guardrailType : '—') + '</td>' +
+      '<td>' + new Date(t.createdAt).toLocaleTimeString() + '</td></tr>'
+    ).join('') : '<tr><td colspan="7" class="empty">No traces yet — send a message to /ask.</td></tr>';
+
+    $('content').innerHTML =
+      '<div class="grid">' + cards + '</div>' +
+      '<h2>Requests by route</h2>' + routes +
+      '<h2>Recent requests</h2><div class="scroll"><table>' +
+      '<thead><tr><th>Route</th><th>Sources</th><th>Tokens</th><th>Cost</th><th>Latency</th><th>Guardrail</th><th>Time</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody></table></div>';
+  } catch (e) {
+    $('status').textContent = 'error';
+    $('content').innerHTML = '<div class="empty">Failed to load stats: ' + e.message + '</div>';
+  }
+}
+load();
+setInterval(load, 10000);
+</script>
+</body>
+</html>
