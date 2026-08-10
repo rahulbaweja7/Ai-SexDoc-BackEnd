@@ -110,3 +110,4 @@ router.post('/', optionalAuth, async (req, res) => {
 
 module.exports = router;
 module.exports.buildProfileContext = buildProfileContext;
+module.exports.SYSTEM_PROMPT = SYSTEM_PROMPT;

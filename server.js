@@ -20,6 +20,7 @@ const authRoute = require('./routes/auth');
 const ttsRoute = require('./routes/tts');
 const sessionsRoute = require('./routes/sessions');
 const feedbackRoute = require('./routes/feedback');
+const agentRoute = require('./routes/agent');
 
 const app = express();
 const PORT = process.env.PORT || 3001; 
@@ -83,6 +84,7 @@ const chatLimiter = rateLimit({
 app.use('/auth', authLimiter, authRoute);
 app.use('/ask', chatLimiter, askRoute);
 app.use('/chat', chatLimiter, askRoute);
+app.use('/agent', chatLimiter, agentRoute);
 
 const ttsLimiter = rateLimit({
   windowMs: 60 * 1000,

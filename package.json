@@ -7,11 +7,14 @@
     "test:integration": "jest tests/integration --runInBand",
     "test:rag": "jest tests/rag --runInBand",
     "eval:baseline": "node eval/runBaseline.js",
-    "eval": "node eval/runEval.js"
+    "eval": "node eval/runEval.js",
+    "eval:agent": "node eval/runAgent.js"
   },
   "jest": {
     "testEnvironment": "node",
-    "testMatch": ["**/tests/**/*.test.js"],
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
     "testTimeout": 15000
   },
   "repository": {
@@ -27,6 +30,8 @@
   },
   "homepage": "https://github.com/rahulbaweja7/Ai-SexDoc-BackEnd#readme",
   "dependencies": {
+    "@langchain/core": "^1.2.5",
+    "@langchain/langgraph": "^1.4.9",
     "cohere-ai": "^8.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",

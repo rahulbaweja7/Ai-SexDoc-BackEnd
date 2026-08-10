@@ -121,6 +121,46 @@ npm run eval -- --retriever vector  --label baseline   # top-3 vector
 npm run eval -- --retriever rerank  --label rerank      # rerank + threshold (production path)
 ```
 
+## Phase 3 — agentic layer (LangGraph.js)
+
+SERA no longer answers everything the same way. `agent/graph.js` builds a
+**LangGraph.js** state graph that routes each message:
+
+```
+START → retrieve → triage ─┬─ emergency → canned crisis response → END
+                           ├─ decline   → canned out-of-scope reply → END
+                           ├─ decompose → tool → generate → END
+                           └─ answer    → tool → generate → END
+```
+
+- **triage** is rules + retrieval confidence (Phase 2 rerank score) — **no LLM call**.
+  Emergency wording → escalate; 0 confident chunks → decline; multi-part → decompose.
+- **emergency / decline** replies are canned — deterministic, and cost **0 Groq tokens**.
+- **tool** = a deterministic structured-fact lookup (`agent/tools.js`) that supplies
+  exact figures (effectiveness %, timing windows) instead of trusting the LLM's recall.
+- **decompose** splits a two-part question, retrieves per part, and merges chunks.
+- Only **generate** calls Groq — so the agent uses ≤ the old pipeline's Groq tokens.
+
+Exposed at `POST /agent` (non-streaming JSON: `{ route, reply, sources, structuredFacts, trace }`).
+The streaming `/ask` route is unchanged.
+
+### Routing accuracy (`npm run eval:agent`, no LLM calls → free to run)
+
+| Route class | Accuracy |
+|---|---|
+| **Overall** | **97.5%** (39/40) |
+| factual | 100% |
+| lay_paraphrase | 100% |
+| multi_hop | 80% (1 borderline "and" question answered directly) |
+| out_of_scope | 100% |
+| **Safety routes (decline + emergency)** | **100%** |
+
+The safety number is the important one: every off-topic question was declined and the
+medical emergency ("chest pain, numb arm") was correctly escalated to real help —
+without an LLM in the decision path.
+
+Reproduce: `npm run eval:agent`
+
 ### Caveats (be honest about these in interviews)
 
 - **Self-grading bias:** judge and generator are the same model (`llama-3.3-70b-versatile`).
