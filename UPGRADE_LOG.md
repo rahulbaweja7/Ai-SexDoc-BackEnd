@@ -130,7 +130,7 @@ escalated to real help.
 
 ---
 
-## Phase 4 (in progress) — Safety guardrail  (`agent/guardrail.js`)
+## Phase 4a — Safety guardrail  (`agent/guardrail.js`)
 
 Keyword emergency detection is fast/free but brittle — indirect phrasing slips
 through ("i don't want to be here anymore"). Added a **second safety layer**: a
@@ -143,7 +143,7 @@ for medical). Fail-open so a classifier hiccup can never take the chat down.
 (indirect "hard" cases **0% → 100%**), benign false-positive rate **0%**. Live in
 `/ask` as safety layer 2 behind the keyword rule.
 
-## Phase 4 (rest) — Observability  (`utils/trace.js`, `routes/stats.js`, `public/dashboard.html`)
+## Phase 4b — Observability  (`utils/trace.js`, `routes/stats.js`, `public/dashboard.html`)
 
 Per-request tracing + cost tracking, then a live dashboard.
 
