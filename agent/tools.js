@@ -9,18 +9,23 @@
 // ── Emergency triage ────────────────────────────────────────────────────────
 // Signals that a message needs real, immediate help — not a chatbot answer.
 const EMERGENCY_PATTERNS = [
-  /chest pain/,
-  /can'?t breathe|cannot breathe|trouble breathing|struggling to breathe/,
-  /suicid|kill myself|end my life|want to die|harm myself|hurt myself/,
-  /overdose|overdosed/,
-  /unconscious|passed out|won'?t wake up/,
-  /bleeding heavily|heavy bleeding|won'?t stop bleeding|lot of blood/,
-  /stroke|numb (arm|face)|slurred speech/,
-  /severe (pain|allergic)|anaphyla/,
+  /heart attack|cardiac arrest/,
+  /chest pain|chest tightness|pain in my chest|tight chest/,
+  /can'?t breathe|cannot breathe|trouble breathing|difficulty breathing|struggling to breathe/,
+  /stroke|numb (arm|face|side)|slurred speech|face drooping/,
+  /seizure|seizing|convulsion/,
+  /chok(e|ing)/,
+  /suicid|kill myself|end my life|want to die|harm myself|hurt myself|take my (own )?life/,
+  /overdose|overdosed|poison(ed|ing)?/,
+  /unconscious|passed out|won'?t wake up|unresponsive/,
+  /bleeding heavily|heavy bleeding|won'?t stop bleeding|lots? of blood|severe bleeding/,
+  /severe (pain|allergic)|anaphyla|allergic reaction/,
+  /call (911|999|112|an ambulance)|need an ambulance|emergency room/,
 ];
 
 function isEmergency(text) {
-  const t = (text || '').toLowerCase();
+  // Normalize curly/smart apostrophes to straight so "can’t" matches "can'?t".
+  const t = (text || '').toLowerCase().replace(/[’‘]/g, "'");
   return EMERGENCY_PATTERNS.some((re) => re.test(t));
 }
 
