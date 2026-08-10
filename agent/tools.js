@@ -63,4 +63,15 @@ function factLookup(text) {
   return hits;
 }
 
-module.exports = { isEmergency, isMultiPart, splitParts, factLookup, EMERGENCY_PATTERNS };
+// ── Canned safe replies (shared by the agent graph and the /ask route) ───────
+const EMERGENCY_REPLY =
+  "This sounds like it may be a medical emergency, and that's beyond what I can safely help with. " +
+  'Please contact emergency services right now — 911 in the US, 999 or 111 in the UK. ' +
+  "If you're in crisis or thinking about harming yourself, you can call or text 988 (US Suicide & Crisis Lifeline) any time. " +
+  "You deserve real help, and people who can give it are available right now.";
+
+const DECLINE_REPLY =
+  "That's a bit outside what I can help with — I focus on sexual health, relationships, contraception, " +
+  "STIs, anatomy, and intimacy. If you have anything in those areas on your mind, I'm here for it, no judgment.";
+
+module.exports = { isEmergency, isMultiPart, splitParts, factLookup, EMERGENCY_PATTERNS, EMERGENCY_REPLY, DECLINE_REPLY };

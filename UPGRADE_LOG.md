@@ -120,8 +120,11 @@ replies are canned (0 Groq tokens); only the `generate` node calls Groq.
 100%** — every off-topic question declined, the "chest pain / numb arm" emergency
 escalated to real help.
 
-> Live on the `/agent` API. The website UI still calls the old streaming `/ask` —
-> wiring the front-end to the agent is a pending follow-up.
+> **Live in the real chat.** The streaming `/ask` route was upgraded to run the
+> agent's brain (triage → decline/escalate/decompose → tool → stream) rather than
+> repointing the front-end at `/agent`. So users get routing + escalation with no
+> front-end change, and normal answers still stream word-by-word. `/agent`
+> (non-streaming JSON) remains for the eval + API use.
 
 ---
 

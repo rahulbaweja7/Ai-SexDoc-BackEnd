@@ -3,6 +3,7 @@ const router = express.Router();
 const { OpenAI } = require("openai");
 const jwt = require('jsonwebtoken');
 const { retrieve, formatChunksAsContext } = require('../utils/retrieve');
+const { isEmergency, isMultiPart, splitParts, factLookup, EMERGENCY_REPLY, DECLINE_REPLY } = require('../agent/tools');
 const logger = require('../utils/logger');
 
 const JWT_SECRET = process.env.JWT_SECRET; // validated at startup in server.js
@@ -64,23 +65,58 @@ router.post('/', optionalAuth, async (req, res) => {
       }))
     : [];
 
+  // Stream a ready-made reply (used for the no-LLM decline/emergency routes).
+  function streamCanned(route, text) {
+    res.write(`data: ${JSON.stringify({ token: text })}\n\n`);
+    res.write('data: [DONE]\n\n');
+    res.end();
+    logger.info('/ask:route', { userId, route, latencyMs: Date.now() - startMs });
+  }
+
   try {
-    const chunks = await retrieve(userMessage);
+    // ── Agent step 1: retrieve (vector + Cohere rerank) ──
+    let chunks = await retrieve(userMessage);
+
+    // ── Agent step 2: triage (rules + retrieval confidence, no LLM) ──
+    // Emergency wording → escalate to real help instead of answering.
+    if (isEmergency(userMessage)) return streamCanned('emergency', EMERGENCY_REPLY);
+    // Nothing cleared the relevance bar → out of scope, decline instead of guessing.
+    if (!chunks.length) return streamCanned('decline', DECLINE_REPLY);
+
+    // ── Agent step 3: decompose multi-part questions (retrieve each part) ──
+    if (isMultiPart(userMessage)) {
+      const parts = splitParts(userMessage);
+      const perPart = await Promise.all(parts.map(p => retrieve(p)));
+      const seen = new Set();
+      const merged = [];
+      for (const list of perPart) for (const c of list) if (!seen.has(c.text)) { seen.add(c.text); merged.push(c); }
+      if (merged.length) chunks = merged.slice(0, 4);
+    }
+
+    // ── Agent step 4: tool — deterministic structured facts (exact numbers) ──
+    const facts = factLookup(userMessage);
+    const toolContext = facts.length
+      ? `\n\nVerified exact figures (use these numbers precisely):\n${facts.map(f => `- ${f}`).join('\n')}`
+      : '';
+
     const ragContext = formatChunksAsContext(chunks);
 
     logger.info('/ask', {
       userId,
+      route: 'answer',
       ragChunks: chunks.length,
       ragSources: chunks.map(c => c.source),
+      toolFacts: facts.length,
       historyLength: priorMessages.length,
       messagePreview: userMessage.slice(0, 60),
     });
 
+    // ── Agent step 5: stream the grounded answer ──
     const stream = await openai.chat.completions.create({
       model: 'llama-3.3-70b-versatile',
       stream: true,
       messages: [
-        { role: 'system', content: SYSTEM_PROMPT + buildProfileContext(profile) + ragContext },
+        { role: 'system', content: SYSTEM_PROMPT + buildProfileContext(profile) + ragContext + toolContext },
         ...priorMessages,
         { role: 'user', content: userMessage },
       ],
