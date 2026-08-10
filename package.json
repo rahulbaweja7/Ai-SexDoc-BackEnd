@@ -8,7 +8,8 @@
     "test:rag": "jest tests/rag --runInBand",
     "eval:baseline": "node eval/runBaseline.js",
     "eval": "node eval/runEval.js",
-    "eval:agent": "node eval/runAgent.js"
+    "eval:agent": "node eval/runAgent.js",
+    "eval:safety": "node eval/runSafety.js"
   },
   "jest": {
     "testEnvironment": "node",

@@ -128,10 +128,23 @@ escalated to real help.
 
 ---
 
+## Phase 4 (in progress) — Safety guardrail  (`agent/guardrail.js`)
+
+Keyword emergency detection is fast/free but brittle — indirect phrasing slips
+through ("i don't want to be here anymore"). Added a **second safety layer**: a
+small/fast LLM classifier (`llama-3.1-8b-instant`) run in parallel with retrieval
+(so it hides behind that latency), classifying medical / self-harm / abuse crisis
+intent. Type-aware crisis replies (988 for self-harm, DV hotline for abuse, 911
+for medical). Fail-open so a classifier hiccup can never take the chat down.
+
+**Measured (`npm run eval:safety`, 18 cases):** emergency recall **25% → 100%**
+(indirect "hard" cases **0% → 100%**), benign false-positive rate **0%**. Live in
+`/ask` as safety layer 2 behind the keyword rule.
+
 ## Still to do
 
-- **Phase 4 — Observability:** per-request tracing (chunks, prompt, tokens, latency),
-  token-cost tracking, a small dashboard, output guardrails.
+- **Phase 4 (rest) — Observability:** per-request tracing (chunks, prompt, tokens,
+  latency), token-cost tracking, a small dashboard.
 - **Phase 5 — Redeploy + CI:** redeploy the upgraded backend; run the eval suite on every
   push and fail the build if faithfulness/retrieval scores regress.
 - **Housekeeping:** rotate previously-exposed secrets; `node_modules` is committed to the

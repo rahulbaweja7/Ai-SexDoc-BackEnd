@@ -3,7 +3,8 @@ const router = express.Router();
 const { OpenAI } = require("openai");
 const jwt = require('jsonwebtoken');
 const { retrieve, formatChunksAsContext } = require('../utils/retrieve');
-const { isEmergency, isMultiPart, splitParts, factLookup, EMERGENCY_REPLY } = require('../agent/tools');
+const { isEmergency, isMultiPart, splitParts, factLookup } = require('../agent/tools');
+const { safetyCheck, getCrisisReply } = require('../agent/guardrail');
 const logger = require('../utils/logger');
 
 const JWT_SECRET = process.env.JWT_SECRET; // validated at startup in server.js
@@ -74,12 +75,18 @@ router.post('/', optionalAuth, async (req, res) => {
   }
 
   try {
-    // ── Agent step 1: retrieve (vector + Cohere rerank) ──
-    let chunks = await retrieve(userMessage);
+    // ── Agent step 1: safety layer 1 — fast keyword rule (instant, free) ──
+    if (isEmergency(userMessage)) return streamCanned('emergency:keyword', getCrisisReply('medical'));
 
-    // ── Agent step 2: safety triage (deterministic rule) ──
-    // Emergency wording → escalate to real help instead of answering.
-    if (isEmergency(userMessage)) return streamCanned('emergency', EMERGENCY_REPLY);
+    // ── Agent step 2: retrieve + safety layer 2 (LLM guardrail) in parallel ──
+    // The guardrail catches crisis intent the keywords miss ("i don't want to be
+    // here anymore"). Running it alongside retrieval hides its latency.
+    const [retrieved, safety] = await Promise.all([
+      retrieve(userMessage),
+      safetyCheck(userMessage),
+    ]);
+    if (safety.emergency) return streamCanned(`emergency:${safety.type}`, getCrisisReply(safety.type));
+    let chunks = retrieved;
 
     // ── Agent step 3: decompose multi-part questions (retrieve each part) ──
     if (isMultiPart(userMessage)) {
