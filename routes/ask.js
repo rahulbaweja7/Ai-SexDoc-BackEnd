@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { OpenAI } = require("openai");
 const jwt = require('jsonwebtoken');
-const { retrieveRelevantChunks, formatChunksAsContext } = require('../utils/retrieve');
+const { retrieve, formatChunksAsContext } = require('../utils/retrieve');
 const logger = require('../utils/logger');
 
 const JWT_SECRET = process.env.JWT_SECRET; // validated at startup in server.js
@@ -65,7 +65,7 @@ router.post('/', optionalAuth, async (req, res) => {
     : [];
 
   try {
-    const chunks = await retrieveRelevantChunks(userMessage);
+    const chunks = await retrieve(userMessage);
     const ragContext = formatChunksAsContext(chunks);
 
     logger.info('/ask', {

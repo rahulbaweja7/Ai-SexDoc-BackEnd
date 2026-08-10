@@ -1,0 +1,1859 @@
+{
+  "label": "rerank-0.3",
+  "timestamp": "2026-08-10T07:59:08.806Z",
+  "config": {
+    "gen_model": "llama-3.3-70b-versatile",
+    "judge_model": "llama-3.3-70b-versatile",
+    "embed_model": "cohere embed-english-v3.0 (1024d)",
+    "temperature": 0,
+    "retriever": "rerank",
+    "retriever_opts": {
+      "candidates": 10,
+      "maxK": 3,
+      "minScore": 0.3
+    }
+  },
+  "aggregate": {
+    "questions": 40,
+    "retrieval_live": true,
+    "faithfulness_mean": 0.9407,
+    "answer_relevance_mean": 1,
+    "retrieval_precision_mean": 0.9133,
+    "retrieval_recall_mean": 1,
+    "retrieval_f1_mean": 0.94,
+    "oos_count": 0,
+    "oos_appropriate_refusal_rate": null,
+    "latency_ms": {
+      "retrieval_mean": 424.8,
+      "generation_mean": 1816.8,
+      "total_mean": 2277.7
+    },
+    "cost_usd": {
+      "generation": 0.004931,
+      "judge": 0.011247,
+      "total": 0.016178
+    },
+    "errors": 15
+  },
+  "results": [
+    {
+      "id": "q01",
+      "question": "How effective is the combined pill at preventing pregnancy?",
+      "type": "factual",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c00"
+      ],
+      "retrieval_ms": 462,
+      "retrieved": [
+        {
+          "id": "c00",
+          "source": "NHS",
+          "score": 0.8701
+        },
+        {
+          "id": "c01",
+          "source": "NHS",
+          "score": 0.8259
+        }
+      ],
+      "retrieval": {
+        "precision": 0.5,
+        "recall": 1,
+        "f1": 0.6667
+      },
+      "top_score": 0.8701,
+      "generation_ms": 728,
+      "answer": "The combined pill is more than 99% effective at preventing pregnancy when taken correctly, meaning you take it at the same time every day. It's a really reliable form of contraception, but it does require you to be consistent with taking it. If you're considering the combined pill, it's a good idea to talk to a healthcare provider to see if it's the right fit for you.",
+      "gen_cost_usd": 0.000212,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "directly addresses effectiveness and provides additional context"
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 2,
+        "total": 2,
+        "claims": [
+          {
+            "claim": "The combined pill is more than 99% effective at preventing pregnancy when taken correctly",
+            "supported": true
+          },
+          {
+            "claim": "The combined pill must be taken at the same time every day to maintain effectiveness",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 694,
+      "total_ms": 1190
+    },
+    {
+      "id": "q02",
+      "question": "Can I use the mini pill if I'm breastfeeding?",
+      "type": "factual",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c01"
+      ],
+      "retrieval_ms": 296,
+      "retrieved": [
+        {
+          "id": "c01",
+          "source": "NHS",
+          "score": 0.8503
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8503,
+      "generation_ms": 477,
+      "answer": "The mini pill is actually a great option for breastfeeding moms. Since it's a progestogen-only pill, it doesn't contain estrogen, which makes it safe to use while breastfeeding. It's over 99% effective when taken correctly, so you can feel confident about preventing pregnancy while nursing your baby.",
+      "gen_cost_usd": 0.000167,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the question about using the mini pill while breastfeeding, providing relevant information about its safety and effectiveness."
+      },
+      "faithfulness": {
+        "score": 0.8,
+        "supported": 4,
+        "total": 5,
+        "claims": [
+          {
+            "claim": "The mini pill is a great option for breastfeeding moms",
+            "supported": false
+          },
+          {
+            "claim": "The mini pill is a progestogen-only pill",
+            "supported": true
+          },
+          {
+            "claim": "The mini pill does not contain estrogen",
+            "supported": true
+          },
+          {
+            "claim": "The mini pill is safe to use while breastfeeding",
+            "supported": true
+          },
+          {
+            "claim": "The mini pill is over 99% effective when taken correctly",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 757,
+      "total_ms": 773
+    },
+    {
+      "id": "q03",
+      "question": "Do condoms protect against STIs as well as pregnancy?",
+      "type": "factual",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c02"
+      ],
+      "retrieval_ms": 343,
+      "retrieved": [
+        {
+          "id": "c02",
+          "source": "NHS",
+          "score": 0.8624
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8624,
+      "generation_ms": 367,
+      "answer": "Yeah, condoms are great because they protect against both pregnancy and sexually transmitted infections (STIs). They're the only form of contraception that does both, which is really convenient. When used correctly, male condoms are 98% effective, and female condoms are 95% effective, so they're a pretty reliable choice.",
+      "gen_cost_usd": 0.000164,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "fully addresses the question"
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 4,
+        "total": 4,
+        "claims": [
+          {
+            "claim": "Condoms protect against both pregnancy and sexually transmitted infections (STIs)",
+            "supported": true
+          },
+          {
+            "claim": "Condoms are the only form of contraception that protects against both pregnancy and STIs",
+            "supported": true
+          },
+          {
+            "claim": "Male condoms are 98% effective when used correctly",
+            "supported": true
+          },
+          {
+            "claim": "Female condoms are 95% effective with perfect use",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 759,
+      "total_ms": 710
+    },
+    {
+      "id": "q04",
+      "question": "How long after unprotected sex can I take the morning-after pill?",
+      "type": "factual",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c03"
+      ],
+      "retrieval_ms": 304,
+      "retrieved": [
+        {
+          "id": "c03",
+          "source": "NHS",
+          "score": 0.8858
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8858,
+      "generation_ms": 534,
+      "answer": "You can take the morning-after pill up to 72 hours after unprotected sex, but it's most effective the sooner you take it. The sooner you take it, the better it works, so don't wait if you can help it. It's also worth knowing that there's another option, the copper IUD, which can be used as emergency contraception up to 5 days after unprotected sex and is more than 99% effective.",
+      "gen_cost_usd": 0.000192,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the question, providing a clear timeframe for taking the morning-after pill and additional information on its effectiveness and an alternative option."
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 4,
+        "total": 4,
+        "claims": [
+          {
+            "claim": "The morning-after pill can be used up to 72 hours after unprotected sex",
+            "supported": true
+          },
+          {
+            "claim": "The morning-after pill is most effective the sooner it is taken",
+            "supported": true
+          },
+          {
+            "claim": "The copper IUD can be used as emergency contraception up to 5 days after unprotected sex",
+            "supported": true
+          },
+          {
+            "claim": "The copper IUD is more than 99% effective as emergency contraception",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 683,
+      "total_ms": 838
+    },
+    {
+      "id": "q05",
+      "question": "How long does the contraceptive implant last?",
+      "type": "factual",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c04"
+      ],
+      "retrieval_ms": 320,
+      "retrieved": [
+        {
+          "id": "c04",
+          "source": "NHS",
+          "score": 0.8613
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8613,
+      "generation_ms": 380,
+      "answer": "The contraceptive implant is actually really long-lasting - it's effective for up to 3 years. After that, you'll need to get a new one inserted if you want to keep using it. But the good news is that it can be removed at any time if you decide you want to get pregnant or switch to a different form of contraception.",
+      "gen_cost_usd": 0.000172,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the question about the duration of the contraceptive implant's effectiveness."
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 3,
+        "total": 3,
+        "claims": [
+          {
+            "claim": "The contraceptive implant is effective for up to 3 years",
+            "supported": true
+          },
+          {
+            "claim": "You'll need to get a new one inserted after 3 years if you want to keep using it",
+            "supported": true
+          },
+          {
+            "claim": "The contraceptive implant can be removed at any time if you decide you want to get pregnant or switch to a different form of contraception",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 814,
+      "total_ms": 700
+    },
+    {
+      "id": "q06",
+      "question": "What is the most common STI in the UK?",
+      "type": "factual",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c05"
+      ],
+      "retrieval_ms": 321,
+      "retrieved": [
+        {
+          "id": "c05",
+          "source": "NHS",
+          "score": 0.8637
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8637,
+      "generation_ms": 415,
+      "answer": "The most common STI in the UK is chlamydia. It's often symptom-free, which is why regular testing is really important to catch it early. Luckily, it's easily treated with antibiotics, but if left untreated, it can lead to some serious long-term problems, like infertility.",
+      "gen_cost_usd": 0.000164,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the question by stating the most common STI in the UK and providing additional relevant information."
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 6,
+        "total": 6,
+        "claims": [
+          {
+            "claim": "The most common STI in the UK is chlamydia",
+            "supported": true
+          },
+          {
+            "claim": "Chlamydia is often symptom-free",
+            "supported": true
+          },
+          {
+            "claim": "Regular testing is important to catch chlamydia early",
+            "supported": true
+          },
+          {
+            "claim": "Chlamydia is easily treated with antibiotics",
+            "supported": true
+          },
+          {
+            "claim": "If left untreated, chlamydia can lead to serious long-term problems",
+            "supported": true
+          },
+          {
+            "claim": "Chlamydia can cause infertility if left untreated",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 795,
+      "total_ms": 736
+    },
+    {
+      "id": "q07",
+      "question": "Can gonorrhoea infect the throat?",
+      "type": "factual",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c06"
+      ],
+      "retrieval_ms": 313,
+      "retrieved": [
+        {
+          "id": "c06",
+          "source": "NHS",
+          "score": 0.8115
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8115,
+      "generation_ms": 511,
+      "answer": "Yeah, gonorrhoea can infect the throat, which is often referred to as pharyngeal gonorrhoea. This can happen if you have oral sex with someone who has the infection. It's worth noting that throat infections often don't have any symptoms, so it's possible to have it without realizing it.",
+      "gen_cost_usd": 0.00017,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the question, providing a clear and concise explanation of how gonorrhoea can infect the throat."
+      },
+      "faithfulness": {
+        "score": 0.6667,
+        "supported": 2,
+        "total": 3,
+        "claims": [
+          {
+            "claim": "Gonorrhoea can infect the throat",
+            "supported": true
+          },
+          {
+            "claim": "Throat gonorrhoea infection can occur through oral sex with someone who has the infection",
+            "supported": false
+          },
+          {
+            "claim": "Throat infections often don't have any symptoms",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 717,
+      "total_ms": 824
+    },
+    {
+      "id": "q08",
+      "question": "If someone with HIV has an undetectable viral load, can they still pass it on?",
+      "type": "factual",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c07"
+      ],
+      "retrieval_ms": 300,
+      "retrieved": [
+        {
+          "id": "c07",
+          "source": "NHS",
+          "score": 0.8417
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8417,
+      "generation_ms": 437,
+      "answer": "If someone with HIV has an undetectable viral load, thanks to effective treatment, the risk of passing it on to their sexual partner is basically zero. This is because the virus is suppressed to such a low level that it's not detectable in their blood, and therefore can't be transmitted. It's a game-changer for people living with HIV, and it's a huge relief for them and their partners.",
+      "gen_cost_usd": 0.000197,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the question, providing a clear and concise explanation of the risk of transmission when someone with HIV has an undetectable viral load."
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 2,
+        "total": 2,
+        "claims": [
+          {
+            "claim": "If someone with HIV has an undetectable viral load, thanks to effective treatment, the risk of passing it on to their sexual partner is basically zero.",
+            "supported": true
+          },
+          {
+            "claim": "the virus is suppressed to such a low level that it's not detectable in their blood, and therefore can't be transmitted",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 851,
+      "total_ms": 737
+    },
+    {
+      "id": "q09",
+      "question": "What is PrEP and how well does it work?",
+      "type": "factual",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c08"
+      ],
+      "retrieval_ms": 313,
+      "retrieved": [
+        {
+          "id": "c08",
+          "source": "Planned Parenthood",
+          "score": 0.8305
+        },
+        {
+          "id": "c00",
+          "source": "NHS",
+          "score": 0.6714
+        }
+      ],
+      "retrieval": {
+        "precision": 0.5,
+        "recall": 1,
+        "f1": 0.6667
+      },
+      "top_score": 0.8305,
+      "generation_ms": 578,
+      "answer": "PrEP, or pre-exposure prophylaxis, is a medicine taken by people who are HIV-negative to prevent getting HIV. It's super effective - when taken as prescribed, it can reduce the risk of getting HIV from sex by about 99%. This is a huge deal, and it's been a game-changer for people who are at higher risk of HIV exposure. Just keep in mind that PrEP doesn't protect against other STIs, so it's still important to use other forms of protection and get regular check-ups.",
+      "gen_cost_usd": 0.000238,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly defines PrEP, explains its purpose, and provides information on its effectiveness."
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 3,
+        "total": 3,
+        "claims": [
+          {
+            "claim": "PrEP is a medicine taken by HIV-negative people to prevent getting HIV",
+            "supported": true
+          },
+          {
+            "claim": "PrEP reduces the risk of getting HIV from sex by about 99% when taken as prescribed",
+            "supported": true
+          },
+          {
+            "claim": "PrEP does not protect against other STIs",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 613,
+      "total_ms": 891
+    },
+    {
+      "id": "q10",
+      "question": "Is there a cure for herpes?",
+      "type": "factual",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c09"
+      ],
+      "retrieval_ms": 332,
+      "retrieved": [
+        {
+          "id": "c09",
+          "source": "NHS",
+          "score": 0.8178
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8178,
+      "generation_ms": 377,
+      "answer": "Unfortunately, there's no cure for herpes, but don't worry, it's manageable. Antiviral medication can really help reduce the frequency and severity of outbreaks, and also lower the risk of passing it on to someone else. It's not the end of the world, and many people with herpes live totally normal, healthy lives.",
+      "gen_cost_usd": 0.000173,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the question about a cure for herpes and provides additional information on managing the condition."
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 3,
+        "total": 3,
+        "claims": [
+          {
+            "claim": "There is no cure for herpes",
+            "supported": true
+          },
+          {
+            "claim": "Antiviral medication can reduce the frequency and severity of outbreaks",
+            "supported": true
+          },
+          {
+            "claim": "Antiviral medication can reduce transmission risk",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 749,
+      "total_ms": 709
+    },
+    {
+      "id": "q11",
+      "question": "How often should I get tested for STIs if I have multiple partners?",
+      "type": "factual",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c10"
+      ],
+      "retrieval_ms": 300,
+      "retrieved": [
+        {
+          "id": "c10",
+          "source": "Planned Parenthood",
+          "score": 0.8782
+        },
+        {
+          "id": "c05",
+          "source": "NHS",
+          "score": 0.7146
+        }
+      ],
+      "retrieval": {
+        "precision": 0.5,
+        "recall": 1,
+        "f1": 0.6667
+      },
+      "top_score": 0.8782,
+      "generation_ms": 2572,
+      "answer": "If you have multiple partners, it's a good idea to get tested for STIs every 3 to 6 months. This is because many STIs don't have symptoms, so the only way to know your status is to get tested regularly. Plus, getting tested is a great way to take care of yourself and your partners, and most clinics offer free and confidential testing, so it's easy to stay on top of your sexual health.",
+      "gen_cost_usd": 0.000229,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the question, providing a specific time frame for STI testing and explaining the importance of regular testing for individuals with multiple partners."
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 4,
+        "total": 4,
+        "claims": [
+          {
+            "claim": "It's a good idea to get tested for STIs every 3 to 6 months if you have multiple partners",
+            "supported": true
+          },
+          {
+            "claim": "Many STIs don't have symptoms",
+            "supported": true
+          },
+          {
+            "claim": "The only way to know your status is to get tested regularly",
+            "supported": true
+          },
+          {
+            "claim": "Most clinics offer free and confidential testing",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 4759,
+      "total_ms": 2872
+    },
+    {
+      "id": "q12",
+      "question": "What counts as a normal menstrual cycle length?",
+      "type": "factual",
+      "topic": "anatomy",
+      "expected_source_ids": [
+        "c11"
+      ],
+      "retrieval_ms": 388,
+      "retrieved": [
+        {
+          "id": "c11",
+          "source": "NHS",
+          "score": 0.8386
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8386,
+      "generation_ms": 2700,
+      "answer": "A normal menstrual cycle can actually vary quite a bit from person to person - it's typically considered normal if it's anywhere from 21 to 40 days long. Most people have a cycle that's around 28 days, but it's not uncommon for it to be a bit shorter or longer. Ovulation usually happens around the middle of the cycle, so for a 28-day cycle, that would be around day 14.",
+      "gen_cost_usd": 0.000191,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the question by providing a specific range for a normal menstrual cycle length and offering additional context."
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 4,
+        "total": 4,
+        "claims": [
+          {
+            "claim": "A normal menstrual cycle can be anywhere from 21 to 40 days long",
+            "supported": true
+          },
+          {
+            "claim": "Most people have a cycle that's around 28 days",
+            "supported": true
+          },
+          {
+            "claim": "Ovulation usually happens around the middle of the cycle",
+            "supported": true
+          },
+          {
+            "claim": "For a 28-day cycle, ovulation would be around day 14",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 4926,
+      "total_ms": 3088
+    },
+    {
+      "id": "q13",
+      "question": "Does an intact hymen prove someone is a virgin?",
+      "type": "factual",
+      "topic": "anatomy",
+      "expected_source_ids": [
+        "c12"
+      ],
+      "retrieval_ms": 376,
+      "retrieved": [
+        {
+          "id": "c12",
+          "source": "Planned Parenthood",
+          "score": 0.8663
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8663,
+      "generation_ms": 2360,
+      "answer": "No, it doesn't. The idea that an intact hymen proves virginity is actually a myth. The hymen can stretch or tear from activities other than sex, like sports or using tampons, and some people are even born with very little hymenal tissue to begin with.",
+      "gen_cost_usd": 0.000166,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "fully addresses the question"
+      },
+      "faithfulness": {
+        "score": 0.75,
+        "supported": 3,
+        "total": 4,
+        "claims": [
+          {
+            "claim": "The hymen can stretch or tear from activities other than sex",
+            "supported": true
+          },
+          {
+            "claim": "Some people are born with very little hymenal tissue",
+            "supported": true
+          },
+          {
+            "claim": "The idea that an intact hymen proves virginity is a myth",
+            "supported": true
+          },
+          {
+            "claim": "The hymen can stretch or tear from sports or using tampons",
+            "supported": false
+          }
+        ]
+      },
+      "judge_ms": 4774,
+      "total_ms": 2736
+    },
+    {
+      "id": "q14",
+      "question": "How big is the clitoris really?",
+      "type": "factual",
+      "topic": "anatomy",
+      "expected_source_ids": [
+        "c13"
+      ],
+      "retrieval_ms": 376,
+      "retrieved": [
+        {
+          "id": "c13",
+          "source": "Planned Parenthood",
+          "score": 0.8716
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8716,
+      "generation_ms": 2470,
+      "answer": "The clitoris is actually way bigger than what you can see on the outside. It's shaped like a wishbone and extends internally, with two legs that reach down alongside the vaginal canal, and can be up to 10cm long. The part you can see is just the tip, and the rest of it is hidden, but it plays a huge role in sexual pleasure.",
+      "gen_cost_usd": 0.00018,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "fully addresses the question about the size of the clitoris"
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 5,
+        "total": 5,
+        "claims": [
+          {
+            "claim": "The clitoris is larger than the visible external tip",
+            "supported": true
+          },
+          {
+            "claim": "The clitoris extends internally and is shaped like a wishbone",
+            "supported": true
+          },
+          {
+            "claim": "The clitoris has two legs that reach down alongside the vaginal canal",
+            "supported": true
+          },
+          {
+            "claim": "The full clitoris can be up to 10cm long",
+            "supported": true
+          },
+          {
+            "claim": "The clitoris plays a central role in sexual pleasure",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 4795,
+      "total_ms": 2846
+    },
+    {
+      "id": "q15",
+      "question": "What makes consent valid?",
+      "type": "factual",
+      "topic": "relationships",
+      "expected_source_ids": [
+        "c14"
+      ],
+      "retrieval_ms": 383,
+      "retrieved": [
+        {
+          "id": "c14",
+          "source": "Planned Parenthood",
+          "score": 0.7535
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.7535,
+      "generation_ms": 2689,
+      "answer": "Valid consent is all about making sure everyone involved is on the same page and comfortable with what's happening. It's got to be freely given, meaning no one's being pressured or coerced, and it's reversible, so you can change your mind at any time. Also, it's essential that everyone's informed, enthusiastic, and specific about what they're agreeing to - and that they're in a state to make decisions, not asleep, unconscious, or intoxicated.",
+      "gen_cost_usd": 0.00019,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the question by providing clear criteria for valid consent."
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 9,
+        "total": 9,
+        "claims": [
+          {
+            "claim": "Consent must be freely given",
+            "supported": true
+          },
+          {
+            "claim": "Consent must be reversible",
+            "supported": true
+          },
+          {
+            "claim": "Consent must be informed",
+            "supported": true
+          },
+          {
+            "claim": "Consent must be enthusiastic",
+            "supported": true
+          },
+          {
+            "claim": "Consent must be specific",
+            "supported": true
+          },
+          {
+            "claim": "A person cannot consent if they are asleep",
+            "supported": true
+          },
+          {
+            "claim": "A person cannot consent if they are unconscious",
+            "supported": true
+          },
+          {
+            "claim": "A person cannot consent if they are intoxicated",
+            "supported": true
+          },
+          {
+            "claim": "Consent can be withdrawn at any time",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 4910,
+      "total_ms": 3072
+    },
+    {
+      "id": "q16",
+      "question": "What are the signs of an unhealthy relationship?",
+      "type": "factual",
+      "topic": "relationships",
+      "expected_source_ids": [
+        "c15"
+      ],
+      "retrieval_ms": 375,
+      "retrieved": [
+        {
+          "id": "c15",
+          "source": "Planned Parenthood",
+          "score": 0.8967
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8967,
+      "generation_ms": 2568,
+      "answer": "Signs of an unhealthy relationship can be pretty subtle, but some red flags include controlling behavior, jealousy, pressure, and disrespect for your boundaries. If you feel like you're walking on eggshells around your partner or can't express your feelings without fear of backlash, that's a bad sign. It's also a problem if your partner consistently disregards your needs or makes you feel bad about yourself. Remember, a healthy relationship should make you feel safe, respected, and valued.",
+      "gen_cost_usd": 0.00019,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "fully addresses the question with specific signs and characteristics of an unhealthy relationship"
+      },
+      "faithfulness": {
+        "score": 0.5,
+        "supported": 1,
+        "total": 2,
+        "claims": [
+          {
+            "claim": "Signs of an unhealthy relationship include controlling behaviour, jealousy, pressure, and disrespect for boundaries",
+            "supported": true
+          },
+          {
+            "claim": "A healthy relationship should make you feel safe, respected, and valued",
+            "supported": false
+          }
+        ]
+      },
+      "judge_ms": 4739,
+      "total_ms": 2943
+    },
+    {
+      "id": "q17",
+      "question": "Can I use any kind of lubricant with condoms?",
+      "type": "factual",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c16"
+      ],
+      "retrieval_ms": 376,
+      "retrieved": [
+        {
+          "id": "c16",
+          "source": "Planned Parenthood",
+          "score": 0.8707
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8707,
+      "generation_ms": 2596,
+      "answer": "Not all lubricants are safe to use with condoms. You should avoid using oil-based lubricants, like petroleum jelly or baby oil, because they can cause latex condoms to break. Instead, opt for water-based or silicone-based lubricants, which are safer to use with condoms and can make sex more comfortable and pleasurable.",
+      "gen_cost_usd": 0.000174,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the question and provides specific guidance on safe lubricant use with condoms."
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 5,
+        "total": 5,
+        "claims": [
+          {
+            "claim": "Not all lubricants are safe to use with condoms",
+            "supported": true
+          },
+          {
+            "claim": "Oil-based lubricants can cause latex condoms to break",
+            "supported": true
+          },
+          {
+            "claim": "Water-based lubricants are safer to use with condoms",
+            "supported": true
+          },
+          {
+            "claim": "Silicone-based lubricants are safer to use with condoms",
+            "supported": true
+          },
+          {
+            "claim": "Lubricants can make sex more comfortable and pleasurable",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 5017,
+      "total_ms": 2972
+    },
+    {
+      "id": "q18",
+      "question": "Why does sex hurt sometimes?",
+      "type": "factual",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c17"
+      ],
+      "retrieval_ms": 392,
+      "retrieved": [
+        {
+          "id": "c17",
+          "source": "NHS",
+          "score": 0.8374
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8374,
+      "generation_ms": 6430,
+      "answer": "Sex can hurt for a lot of different reasons, and it's actually pretty common. It might be because of something physical like not enough lubrication, an infection, or a condition like endometriosis. Sometimes it can also be related to psychological factors or involuntary muscle tightening, which can be really frustrating and uncomfortable. If it's happening to you, it's a good idea to talk to a doctor or a sexual health clinic to figure out what's going on and find a way to make things more comfortable.",
+      "gen_cost_usd": 0.000205,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the question, providing multiple possible reasons for sex hurting and offering a solution to consult a doctor or clinic."
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 7,
+        "total": 7,
+        "claims": [
+          {
+            "claim": "Painful sex is common",
+            "supported": true
+          },
+          {
+            "claim": "Insufficient lubrication can cause painful sex",
+            "supported": true
+          },
+          {
+            "claim": "Infections can cause painful sex",
+            "supported": true
+          },
+          {
+            "claim": "Endometriosis can cause painful sex",
+            "supported": true
+          },
+          {
+            "claim": "Psychological factors can cause painful sex",
+            "supported": true
+          },
+          {
+            "claim": "Involuntary muscle tightening can cause painful sex",
+            "supported": true
+          },
+          {
+            "claim": "A doctor or sexual health clinic can help identify and treat the cause of painful sex",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 1147,
+      "total_ms": 6822
+    },
+    {
+      "id": "q19",
+      "question": "Is having a low sex drive normal?",
+      "type": "factual",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c18"
+      ],
+      "retrieval_ms": 392,
+      "retrieved": [
+        {
+          "id": "c18",
+          "source": "NHS",
+          "score": 0.8723
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8723,
+      "generation_ms": 2529,
+      "answer": "Having a low sex drive is actually really common, and it's not necessarily a problem unless it's causing you distress. Lots of things can affect your libido, like stress, relationship issues, or even some medications. It's totally normal to have ups and downs when it comes to your sex drive, and if you're worried about it, talking to a doctor or a sex therapist can be really helpful.",
+      "gen_cost_usd": 0.000182,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "fully addresses the question"
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 6,
+        "total": 6,
+        "claims": [
+          {
+            "claim": "Low sex drive is very common",
+            "supported": true
+          },
+          {
+            "claim": "Low sex drive is not a problem unless it is causing distress",
+            "supported": true
+          },
+          {
+            "claim": "Stress can affect libido",
+            "supported": true
+          },
+          {
+            "claim": "Relationship issues can affect libido",
+            "supported": true
+          },
+          {
+            "claim": "Some medications can affect libido",
+            "supported": true
+          },
+          {
+            "claim": "Talking to a doctor or sex therapist can be helpful",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 4885,
+      "total_ms": 2921
+    },
+    {
+      "id": "q20",
+      "question": "How common is erectile dysfunction?",
+      "type": "factual",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c19"
+      ],
+      "retrieval_ms": 458,
+      "retrieved": [
+        {
+          "id": "c19",
+          "source": "NHS",
+          "score": 0.8232
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8232,
+      "generation_ms": 2359,
+      "answer": "Erectile dysfunction is actually pretty common, especially as guys get older. It affects around 50% of men between 40 and 70 to some degree. It's not something to be ashamed of, and it's often caused by physical or psychological factors that can be treated.",
+      "gen_cost_usd": 0.000166,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the question, providing a clear estimate of the prevalence of erectile dysfunction and its common causes."
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 4,
+        "total": 4,
+        "claims": [
+          {
+            "claim": "Erectile dysfunction affects around 50% of men between 40 and 70 to some degree",
+            "supported": true
+          },
+          {
+            "claim": "Erectile dysfunction is not something to be ashamed of",
+            "supported": true
+          },
+          {
+            "claim": "Erectile dysfunction is often caused by physical or psychological factors",
+            "supported": true
+          },
+          {
+            "claim": "Erectile dysfunction can be treated",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 4861,
+      "total_ms": 2817
+    },
+    {
+      "id": "q21",
+      "question": "When is a pregnancy test accurate?",
+      "type": "factual",
+      "topic": "pregnancy",
+      "expected_source_ids": [
+        "c20"
+      ],
+      "retrieval_ms": 399,
+      "retrieved": [
+        {
+          "id": "c20",
+          "source": "NHS",
+          "score": 0.8342
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8342,
+      "generation_ms": 2440,
+      "answer": "Pregnancy tests are usually accurate from the first day of a missed period. This is because they detect a hormone called hCG, which is produced after a fertilized egg implants in the uterus. If you test too early, you might get a false negative result, so it's best to wait until your period is due for the most reliable result.",
+      "gen_cost_usd": 0.000174,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "fully addresses the question about pregnancy test accuracy"
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 4,
+        "total": 4,
+        "claims": [
+          {
+            "claim": "Pregnancy tests are usually accurate from the first day of a missed period",
+            "supported": true
+          },
+          {
+            "claim": "Pregnancy tests detect a hormone called hCG",
+            "supported": true
+          },
+          {
+            "claim": "hCG is produced after a fertilized egg implants in the uterus",
+            "supported": true
+          },
+          {
+            "claim": "Testing too early may give a false negative result",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 4726,
+      "total_ms": 2839
+    },
+    {
+      "id": "q22",
+      "question": "Does fertility decline with age?",
+      "type": "factual",
+      "topic": "pregnancy",
+      "expected_source_ids": [
+        "c21"
+      ],
+      "retrieval_ms": 386,
+      "retrieved": [
+        {
+          "id": "c21",
+          "source": "NHS",
+          "score": 0.8622
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8622,
+      "generation_ms": 2500,
+      "answer": "Yeah, fertility does decline with age, especially for people with ovaries. It's most noticeable after age 35, when the chances of getting pregnant start to decrease more quickly. That being said, lots of people still conceive naturally in their late 30s and early 40s, and there are fertility treatments like IVF available if needed.",
+      "gen_cost_usd": 0.000179,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the question, providing a clear explanation of how fertility declines with age and offering additional context."
+      },
+      "faithfulness": {
+        "score": 0.8,
+        "supported": 4,
+        "total": 5,
+        "claims": [
+          {
+            "claim": "Fertility declines with age",
+            "supported": true
+          },
+          {
+            "claim": "People with ovaries have the most fertile years in their 20s",
+            "supported": false
+          },
+          {
+            "claim": "Fertility starts to decline more sharply after age 35",
+            "supported": true
+          },
+          {
+            "claim": "Many people conceive naturally in their late 30s and early 40s",
+            "supported": true
+          },
+          {
+            "claim": "Fertility treatments like IVF are available if natural conception is difficult",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 4866,
+      "total_ms": 2886
+    },
+    {
+      "id": "q23",
+      "question": "What's the difference between gender identity and sexual orientation?",
+      "type": "factual",
+      "topic": "identity",
+      "expected_source_ids": [
+        "c22"
+      ],
+      "retrieval_ms": 381,
+      "retrieved": [
+        {
+          "id": "c22",
+          "source": "Planned Parenthood",
+          "score": 0.8983
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8983,
+      "generation_ms": 2630,
+      "answer": "So, your gender identity is basically how you feel about your own gender, whether that's the same as the sex you were assigned at birth or not. On the other hand, your sexual orientation is about who you're attracted to, which can be people of the same gender, a different gender, or multiple genders. These two things are separate and don't necessarily determine each other - for example, a person can be a man and be attracted to men, or a woman and be attracted to women, or identify as non-binary and be attracted to anyone.",
+      "gen_cost_usd": 0.000204,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "clearly distinguishes between gender identity and sexual orientation"
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 4,
+        "total": 4,
+        "claims": [
+          {
+            "claim": "Gender identity is a person's internal sense of their own gender",
+            "supported": true
+          },
+          {
+            "claim": "Gender identity may or may not align with the sex assigned at birth",
+            "supported": true
+          },
+          {
+            "claim": "Sexual orientation refers to who someone is attracted to",
+            "supported": true
+          },
+          {
+            "claim": "Gender identity and sexual orientation are separate and independent aspects of identity",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 4805,
+      "total_ms": 3011
+    },
+    {
+      "id": "q24",
+      "question": "I had unprotected sex last night and I'm scared I might get pregnant — what can I do?",
+      "type": "lay_paraphrase",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c03"
+      ],
+      "retrieval_ms": 3594,
+      "retrieved": [
+        {
+          "id": "c03",
+          "source": "NHS",
+          "score": 0.7563
+        },
+        {
+          "id": "c02",
+          "source": "NHS",
+          "score": 0.705
+        },
+        {
+          "id": "c10",
+          "source": "Planned Parenthood",
+          "score": 0.7141
+        }
+      ],
+      "retrieval": {
+        "precision": 0.3333,
+        "recall": 1,
+        "f1": 0.5
+      },
+      "top_score": 0.7563,
+      "generation_ms": 534,
+      "answer": "That can be really scary and overwhelming. First, take a deep breath and know that you have options. You can consider taking emergency contraception, like the morning-after pill, which is most effective the sooner it's taken, but can be used up to 72 hours after unprotected sex. You could also look into getting a copper IUD, which can be used as emergency contraception up to 5 days after unprotected sex and is more than 99% effective.",
+      "gen_cost_usd": 0.000269,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the user's concern about potential pregnancy after unprotected sex, providing specific and timely solutions."
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 2,
+        "total": 2,
+        "claims": [
+          {
+            "claim": "The morning-after pill is most effective the sooner it's taken, but can be used up to 72 hours after unprotected sex",
+            "supported": true
+          },
+          {
+            "claim": "A copper IUD can be used as emergency contraception up to 5 days after unprotected sex and is more than 99% effective",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 4921,
+      "total_ms": 4128
+    },
+    {
+      "id": "q25",
+      "question": "Which type of birth control also stops you catching infections?",
+      "type": "lay_paraphrase",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c02"
+      ],
+      "retrieval_ms": 409,
+      "retrieved": [
+        {
+          "id": "c02",
+          "source": "NHS",
+          "score": 0.7861
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.7861,
+      "generation_ms": 2473,
+      "answer": "Condoms are the way to go - they're the only form of birth control that protects against both pregnancy and sexually transmitted infections (STIs). They're pretty effective too, with male condoms being 98% effective and female condoms being 95% effective when used correctly.",
+      "gen_cost_usd": 0.000158,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "The answer directly addresses the question by stating that condoms are the type of birth control that also stops you from catching infections."
+      },
+      "faithfulness": {
+        "score": 1,
+        "supported": 3,
+        "total": 3,
+        "claims": [
+          {
+            "claim": "Condoms are the only form of contraception that protects against both pregnancy and sexually transmitted infections (STIs)",
+            "supported": true
+          },
+          {
+            "claim": "Male condoms are 98% effective when used correctly",
+            "supported": true
+          },
+          {
+            "claim": "Female condoms are 95% effective when used correctly",
+            "supported": true
+          }
+        ]
+      },
+      "judge_ms": 4741,
+      "total_ms": 2882
+    },
+    {
+      "id": "q26",
+      "question": "That little rod they put in your arm for birth control — how long does it work for?",
+      "type": "lay_paraphrase",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c04"
+      ],
+      "retrieval_ms": 390,
+      "retrieved": [
+        {
+          "id": "c04",
+          "source": "NHS",
+          "score": 0.8435
+        },
+        {
+          "id": "c03",
+          "source": "NHS",
+          "score": 0.7563
+        }
+      ],
+      "retrieval": {
+        "precision": 0.5,
+        "recall": 1,
+        "f1": 0.6667
+      },
+      "top_score": 0.8435,
+      "generation_ms": 2584,
+      "answer": "The contraceptive implant, that little rod inserted under the skin of your upper arm, is actually super effective for up to 3 years. It releases a hormone called progestogen to prevent pregnancy, and it's more than 99% effective, which is really great. Plus, if you decide you want to get pregnant or switch to a different birth control method, it can be removed at any time.",
+      "gen_cost_usd": 0.000226,
+      "relevance": {
+        "score": 1,
+        "rating": 5,
+        "reason": "fully addresses the question about the duration of the contraceptive implant's effectiveness"
+      },
+      "error": "429 Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmcaxxg4erhs6bt9gnt5cnrp` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99804, Requested 555. Please try again in 5m10.176s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+    },
+    {
+      "id": "q27",
+      "question": "I keep losing my erection and I'm worried something's wrong with me.",
+      "type": "lay_paraphrase",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c19"
+      ],
+      "retrieval_ms": 369,
+      "retrieved": [
+        {
+          "id": "c19",
+          "source": "NHS",
+          "score": 0.784
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.784,
+      "error": "429 Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmcaxxg4erhs6bt9gnt5cnrp` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99804, Requested 383. Please try again in 2m41.567999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+    },
+    {
+      "id": "q28",
+      "question": "My periods are all over the place, what could be causing that?",
+      "type": "lay_paraphrase",
+      "topic": "anatomy",
+      "expected_source_ids": [
+        "c11"
+      ],
+      "retrieval_ms": 288,
+      "retrieved": [
+        {
+          "id": "c11",
+          "source": "NHS",
+          "score": 0.755
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.755,
+      "error": "429 Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmcaxxg4erhs6bt9gnt5cnrp` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99803, Requested 336. Please try again in 2m0.095999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+    },
+    {
+      "id": "q29",
+      "question": "Is it bad that I basically never want to have sex anymore?",
+      "type": "lay_paraphrase",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c18"
+      ],
+      "retrieval_ms": 288,
+      "retrieved": [
+        {
+          "id": "c18",
+          "source": "NHS",
+          "score": 0.7651
+        },
+        {
+          "id": "c19",
+          "source": "NHS",
+          "score": 0.6899
+        }
+      ],
+      "retrieval": {
+        "precision": 0.5,
+        "recall": 1,
+        "f1": 0.6667
+      },
+      "top_score": 0.7651,
+      "error": "429 Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmcaxxg4erhs6bt9gnt5cnrp` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99803, Requested 395. Please try again in 2m51.072s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+    },
+    {
+      "id": "q30",
+      "question": "Can you catch an STI from someone who has no symptoms at all?",
+      "type": "lay_paraphrase",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c10",
+        "c05"
+      ],
+      "retrieval_ms": 301,
+      "retrieved": [
+        {
+          "id": "c05",
+          "source": "NHS",
+          "score": 0.7631
+        },
+        {
+          "id": "c10",
+          "source": "Planned Parenthood",
+          "score": 0.7809
+        },
+        {
+          "id": "c06",
+          "source": "NHS",
+          "score": 0.7474
+        }
+      ],
+      "retrieval": {
+        "precision": 0.6667,
+        "recall": 1,
+        "f1": 0.8
+      },
+      "top_score": 0.7631,
+      "error": "429 Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmcaxxg4erhs6bt9gnt5cnrp` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99802, Requested 452. Please try again in 3m39.456s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+    },
+    {
+      "id": "q31",
+      "question": "What lube is safe to use with silicone sex toys?",
+      "type": "lay_paraphrase",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c16"
+      ],
+      "retrieval_ms": 296,
+      "retrieved": [
+        {
+          "id": "c16",
+          "source": "Planned Parenthood",
+          "score": 0.8675
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8675,
+      "error": "429 Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmcaxxg4erhs6bt9gnt5cnrp` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99802, Requested 378. Please try again in 2m35.519999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+    },
+    {
+      "id": "q32",
+      "question": "Do condoms actually protect against STIs, and how often should I still get tested if I have a few partners?",
+      "type": "multi_hop",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c02",
+        "c10"
+      ],
+      "retrieval_ms": 281,
+      "retrieved": [
+        {
+          "id": "c10",
+          "source": "Planned Parenthood",
+          "score": 0.8363
+        },
+        {
+          "id": "c02",
+          "source": "NHS",
+          "score": 0.8181
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8363,
+      "error": "429 Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmcaxxg4erhs6bt9gnt5cnrp` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99802, Requested 396. Please try again in 2m51.072s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+    },
+    {
+      "id": "q33",
+      "question": "I'm HIV negative — what can I take to lower my risk, and does it also cover other STIs?",
+      "type": "multi_hop",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c08",
+        "c02"
+      ],
+      "retrieval_ms": 296,
+      "retrieved": [
+        {
+          "id": "c08",
+          "source": "Planned Parenthood",
+          "score": 0.8118
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 0.5,
+        "f1": 0.6667
+      },
+      "top_score": 0.8118,
+      "error": "429 Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmcaxxg4erhs6bt9gnt5cnrp` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99801, Requested 356. Please try again in 2m15.648s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+    },
+    {
+      "id": "q34",
+      "question": "What are my options right after unprotected sex, and when should I get tested afterwards?",
+      "type": "multi_hop",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c03",
+        "c10"
+      ],
+      "retrieval_ms": 289,
+      "retrieved": [
+        {
+          "id": "c10",
+          "source": "Planned Parenthood",
+          "score": 0.8093
+        },
+        {
+          "id": "c03",
+          "source": "NHS",
+          "score": 0.8021
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8093,
+      "error": "429 Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmcaxxg4erhs6bt9gnt5cnrp` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99801, Requested 404. Please try again in 2m57.12s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+    },
+    {
+      "id": "q35",
+      "question": "What's the difference between the combined pill and the mini pill, and are they equally effective?",
+      "type": "multi_hop",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c00",
+        "c01"
+      ],
+      "retrieval_ms": 292,
+      "retrieved": [
+        {
+          "id": "c01",
+          "source": "NHS",
+          "score": 0.8581
+        },
+        {
+          "id": "c00",
+          "source": "NHS",
+          "score": 0.7645
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8581,
+      "error": "429 Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmcaxxg4erhs6bt9gnt5cnrp` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99800, Requested 409. Please try again in 3m0.576s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+    },
+    {
+      "id": "q36",
+      "question": "Could my painful sex and my low sex drive be connected?",
+      "type": "multi_hop",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c17",
+        "c18"
+      ],
+      "retrieval_ms": 292,
+      "retrieved": [
+        {
+          "id": "c17",
+          "source": "NHS",
+          "score": 0.8022
+        },
+        {
+          "id": "c18",
+          "source": "NHS",
+          "score": 0.8122
+        }
+      ],
+      "retrieval": {
+        "precision": 1,
+        "recall": 1,
+        "f1": 1
+      },
+      "top_score": 0.8022,
+      "error": "429 Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmcaxxg4erhs6bt9gnt5cnrp` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99800, Requested 400. Please try again in 2m52.8s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+    },
+    {
+      "id": "q37",
+      "question": "What's the best pizza topping?",
+      "type": "out_of_scope",
+      "topic": "out_of_scope",
+      "expected_source_ids": [],
+      "retrieval_ms": 287,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": null,
+        "f1": null
+      },
+      "top_score": null,
+      "error": "429 Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmcaxxg4erhs6bt9gnt5cnrp` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99799, Requested 278. Please try again in 1m6.527999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+    },
+    {
+      "id": "q38",
+      "question": "I'm having sudden crushing chest pain and my left arm is numb — what's wrong with me?",
+      "type": "out_of_scope",
+      "topic": "out_of_scope",
+      "expected_source_ids": [],
+      "retrieval_ms": 449,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": null,
+        "f1": null
+      },
+      "top_score": null,
+      "error": "429 Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmcaxxg4erhs6bt9gnt5cnrp` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99799, Requested 314. Please try again in 1m37.631999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+    },
+    {
+      "id": "q39",
+      "question": "How do I get an abortion and how much does it cost?",
+      "type": "out_of_scope",
+      "topic": "out_of_scope",
+      "expected_source_ids": [],
+      "retrieval_ms": 297,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": null,
+        "f1": null
+      },
+      "top_score": null,
+      "error": "429 Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmcaxxg4erhs6bt9gnt5cnrp` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99798, Requested 284. Please try again in 1m10.848s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+    },
+    {
+      "id": "q40",
+      "question": "Where exactly is the prostate and how do you stimulate it?",
+      "type": "out_of_scope",
+      "topic": "out_of_scope",
+      "expected_source_ids": [],
+      "retrieval_ms": 286,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": null,
+        "f1": null
+      },
+      "top_score": null,
+      "error": "429 Rate limit reached for model `llama-3.3-70b-versatile` in organization `org_01kmcaxxg4erhs6bt9gnt5cnrp` service tier `on_demand` on tokens per day (TPD): Limit 100000, Used 99798, Requested 275. Please try again in 1m3.071999999s. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing"
+    }
+  ]
+}

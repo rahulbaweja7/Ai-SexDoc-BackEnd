@@ -21,9 +21,10 @@ const fs = require('fs');
 const path = require('path');
 const { OpenAI } = require('openai');
 const connectToMongo = require('../utils/mongodb');
-const { retrieveRelevantChunks, formatChunksAsContext } = require('../utils/retrieve');
+const { formatChunksAsContext } = require('../utils/retrieve');
 const { loadCorpusIndex, retrievalMetrics, mean, round, costUsd } = require('./lib/metrics');
 const { judgeFaithfulness, judgeRelevance, judgeRefusal, JUDGE_MODEL, JUDGE_PRICE_PER_M } = require('./judge');
+const { getRetriever } = require('./retrievers');
 
 // ── Frozen config (mirrors routes/ask.js) ──
 const GEN_MODEL = 'llama-3.3-70b-versatile';
@@ -42,6 +43,17 @@ const argVal = (flag, def) => {
 };
 const LIMIT = parseInt(argVal('--limit', '0'), 10) || 0;
 const LABEL = argVal('--label', 'eval');
+
+// Phase 2: retrieval strategy is selectable so experiments can A/B without
+// touching production. Defaults reproduce the Phase 0/1 baseline (pure vector).
+const RETRIEVER = argVal('--retriever', 'vector');
+const RETRIEVER_OPTS = {
+  topK: TOP_K,
+  candidates: parseInt(argVal('--candidates', '10'), 10),
+  maxK: parseInt(argVal('--maxk', '3'), 10),
+  minScore: parseFloat(argVal('--minscore', '0.3')),
+};
+const retrieve = getRetriever(RETRIEVER);
 
 const golden = JSON.parse(fs.readFileSync(path.join(__dirname, 'golden-set.json'), 'utf8'));
 const { idFromText } = loadCorpusIndex();
@@ -62,8 +74,10 @@ async function main() {
   let questions = golden.questions;
   if (LIMIT) questions = questions.slice(0, LIMIT);
 
-  console.log(`\n▶ Phase 1 eval "${LABEL}" over ${questions.length} question(s)`);
-  console.log(`  gen=${GEN_MODEL}  judge=${JUDGE_MODEL}  topK=${TOP_K}  temp=${TEMPERATURE}\n`);
+  console.log(`\n▶ Eval "${LABEL}" over ${questions.length} question(s)`);
+  console.log(`  gen=${GEN_MODEL}  judge=${JUDGE_MODEL}  retriever=${RETRIEVER}  temp=${TEMPERATURE}`);
+  if (RETRIEVER === 'rerank') console.log(`  rerank: candidates=${RETRIEVER_OPTS.candidates} maxK=${RETRIEVER_OPTS.maxK} minScore=${RETRIEVER_OPTS.minScore}`);
+  console.log('');
 
   const results = [];
   const genUsage = { prompt: 0, completion: 0 };
@@ -73,9 +87,9 @@ async function main() {
   for (const q of questions) {
     const row = { id: q.id, question: q.question, type: q.type, topic: q.topic, expected_source_ids: q.expected_source_ids };
     try {
-      // 1. Retrieve
+      // 1. Retrieve (strategy selected via --retriever)
       const tRet0 = Date.now();
-      const chunks = await retrieveRelevantChunks(q.question, TOP_K);
+      const chunks = await retrieve(q.question, RETRIEVER_OPTS);
       row.retrieval_ms = Date.now() - tRet0;
       if (chunks.length) anyRetrieval = true;
       const retrievedIds = chunks.map((c) => idFromText(c.text)).filter(Boolean);
@@ -157,7 +171,7 @@ async function main() {
   const output = {
     label: LABEL,
     timestamp: new Date().toISOString(),
-    config: { gen_model: GEN_MODEL, judge_model: JUDGE_MODEL, embed_model: EMBED_MODEL, top_k: TOP_K, temperature: TEMPERATURE, hybrid: false, rerank: false, metadata_filter: false },
+    config: { gen_model: GEN_MODEL, judge_model: JUDGE_MODEL, embed_model: EMBED_MODEL, temperature: TEMPERATURE, retriever: RETRIEVER, retriever_opts: RETRIEVER === 'rerank' ? { candidates: RETRIEVER_OPTS.candidates, maxK: RETRIEVER_OPTS.maxK, minScore: RETRIEVER_OPTS.minScore } : { topK: TOP_K } },
     aggregate,
     results,
   };

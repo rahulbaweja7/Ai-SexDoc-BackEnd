@@ -31,6 +31,10 @@ jest.mock('../../utils/retrieve', () => ({
   retrieveRelevantChunks: jest.fn().mockResolvedValue([
     { text: 'Condoms are 98% effective', source: 'NHS', url: '', topic: 'contraception', score: 0.92 },
   ]),
+  // ask.js calls retrieve() (vector + rerank); mock it so no real Cohere call is made.
+  retrieve: jest.fn().mockResolvedValue([
+    { text: 'Condoms are 98% effective', source: 'NHS', url: '', topic: 'contraception', score: 0.92, rerankScore: 0.95 },
+  ]),
   formatChunksAsContext: jest.fn().mockReturnValue('\n\nVerified health information from trusted sources:\n- "Condoms are 98% effective" (NHS)'),
 }));
 

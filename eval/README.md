@@ -90,6 +90,37 @@ The harness flagged **6 of 36** answerable questions as containing ≥1 unsuppor
 e.g. inventing "start the mini pill 6 weeks after giving birth" (not in sources). These are
 real ungrounded additions the faithfulness metric is designed to catch.
 
+## Phase 2 — retrieval quality (rerank + threshold)
+
+**Change:** instead of returning a fixed top-3 vector hits, over-fetch 10 candidates,
+rerank them with **Cohere `rerank-v3.5`**, and keep only chunks scoring ≥ **0.3**
+(up to 3). Adaptive: 1 chunk for simple questions, 2–3 for multi-part, **0 for
+off-topic**. Shared code path: `utils/retrieve.retrieve()` is used by both the live
+app (`routes/ask.js`) and the eval (`--retriever rerank`), so tests measure what ships.
+
+### Before → after (same golden set)
+
+| Metric | Baseline (vector top-3) | Rerank + threshold |
+|---|---|---|
+| **Retrieval precision** | 38.0% | **90.3%** (+52pt) |
+| Retrieval recall | 98.6% | 98.6% (held) |
+| Faithfulness | 92.8% | 94.1% |
+| Answer relevance | 100% | 100% |
+| Out-of-scope chunk leak | 3 junk chunks each | **0** (all 4) |
+| Cost / run | lower prompt = cheaper generation | fewer chunks sent |
+
+Retrieval metrics are over all 36 answerable questions (retrieval doesn't call the
+LLM, so it completed fully). Answer-quality metrics (faithfulness/relevance) are over
+the 25 questions that were judged before the Groq **free-tier daily token limit**
+(100K/day) was hit mid-run — rerun the full answer-quality pass after the daily reset
+to confirm on the remaining 15.
+
+Reproduce:
+```bash
+npm run eval -- --retriever vector  --label baseline   # top-3 vector
+npm run eval -- --retriever rerank  --label rerank      # rerank + threshold (production path)
+```
+
 ### Caveats (be honest about these in interviews)
 
 - **Self-grading bias:** judge and generator are the same model (`llama-3.3-70b-versatile`).
