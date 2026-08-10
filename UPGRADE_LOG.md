@@ -163,13 +163,25 @@ Per-request tracing + cost tracking, then a live dashboard.
 down). Verified end-to-end: 5 mixed requests → correct per-route counts, token/cost totals,
 and escalation count.
 
-## Still to do
+## Phase 5 — Redeploy + CI  (`.github/workflows/ci.yml`)
 
-- **Phase 5 — Redeploy + CI:** redeploy the upgraded backend; run the eval suite on every
-  push and fail the build if faithfulness/retrieval scores regress.
-- **Optional:** unify the `/agent` graph + eval routing with the live `/ask` behavior
-  (they diverged when `/ask` moved to model-driven scope handling); gate `/stats` +
-  `/dashboard` behind admin if desired.
+- **Redeploy:** the backend auto-deploys from `main` on Render and is live (verified via
+  `/health`, `/agent`, `/ask`). Note: Render's free tier is slow and deploys sometimes
+  need a manual "Deploy latest commit" nudge.
+- **CI (GitHub Actions):** on every push/PR to `main` —
+  - `test` job: `npm ci` + unit/integration jest (hermetic, no external calls).
+  - `safety-gate` job: runs `node eval/runSafety.js --gate`, which **fails the build** if
+    crisis-detection recall drops below 0.9 or the benign false-positive rate exceeds 0.15.
+    Needs only `GROQ_API_KEY` (add as a GitHub Actions secret); skips with a warning if absent.
+
+## Still to do / optional
+
+- Add `GROQ_API_KEY` as a GitHub Actions secret so the safety gate actually runs in CI.
+- **Rotate the MongoDB credentials** — the old connection string is still in git history
+  (pre-`8d1a9fc` README); rotate the Atlas DB password and update `.env` + Render.
+- Unify the `/agent` graph + eval routing with the live `/ask` behavior (they diverged when
+  `/ask` moved to model-driven scope handling); gate `/stats` + `/dashboard` behind admin
+  if desired; extend CI with retrieval/faithfulness gates (needs Cohere + Mongo secrets).
 - **Housekeeping:** rotate previously-exposed secrets; `node_modules` is committed to the
   repo (pre-existing) and could be untracked.
 - **Finish the Phase 2 answer-quality pass** on the 15 questions skipped when the Groq
