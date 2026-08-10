@@ -3,7 +3,7 @@ const router = express.Router();
 const { OpenAI } = require("openai");
 const jwt = require('jsonwebtoken');
 const { retrieve, formatChunksAsContext } = require('../utils/retrieve');
-const { isEmergency, isSmallTalk, isMultiPart, splitParts, factLookup, EMERGENCY_REPLY, DECLINE_REPLY } = require('../agent/tools');
+const { isEmergency, isMultiPart, splitParts, factLookup, EMERGENCY_REPLY } = require('../agent/tools');
 const logger = require('../utils/logger');
 
 const JWT_SECRET = process.env.JWT_SECRET; // validated at startup in server.js
@@ -77,12 +77,9 @@ router.post('/', optionalAuth, async (req, res) => {
     // ── Agent step 1: retrieve (vector + Cohere rerank) ──
     let chunks = await retrieve(userMessage);
 
-    // ── Agent step 2: triage (rules + retrieval confidence, no LLM) ──
+    // ── Agent step 2: safety triage (deterministic rule) ──
     // Emergency wording → escalate to real help instead of answering.
     if (isEmergency(userMessage)) return streamCanned('emergency', EMERGENCY_REPLY);
-    // Nothing cleared the relevance bar. Greetings/small talk still get a warm
-    // reply; only a genuinely off-topic question is declined.
-    if (!chunks.length && !isSmallTalk(userMessage)) return streamCanned('decline', DECLINE_REPLY);
 
     // ── Agent step 3: decompose multi-part questions (retrieve each part) ──
     if (isMultiPart(userMessage)) {
@@ -102,9 +99,17 @@ router.post('/', optionalAuth, async (req, res) => {
 
     const ragContext = formatChunksAsContext(chunks);
 
+    // ── Agent step 5: when there are no grounded facts, let the model handle it
+    // conversationally but stay in scope. This covers greetings, casual slang
+    // ("wassgood"), and off-topic redirection via understanding, not keyword lists. ──
+    const noGrounding = chunks.length === 0;
+    const scopeInstruction = noGrounding
+      ? "\n\nYou found no verified sources for this particular message. If it is a greeting or small talk, reply warmly and briefly. If it is within your focus (sexual health, relationships, contraception, STIs, anatomy, intimacy, bodies, sexuality), answer helpfully from general knowledge but do NOT invent specific statistics or medical claims. If it is clearly about an unrelated topic (cooking, sports, coding, general trivia, etc.), gently say that is outside what you help with and steer back to your focus. Keep it short and warm."
+      : '';
+
     logger.info('/ask', {
       userId,
-      route: 'answer',
+      route: noGrounding ? 'answer:no-source' : 'answer',
       ragChunks: chunks.length,
       ragSources: chunks.map(c => c.source),
       toolFacts: facts.length,
@@ -112,12 +117,12 @@ router.post('/', optionalAuth, async (req, res) => {
       messagePreview: userMessage.slice(0, 60),
     });
 
-    // ── Agent step 5: stream the grounded answer ──
+    // ── Agent step 6: stream the answer ──
     const stream = await openai.chat.completions.create({
       model: 'llama-3.3-70b-versatile',
       stream: true,
       messages: [
-        { role: 'system', content: SYSTEM_PROMPT + buildProfileContext(profile) + ragContext + toolContext },
+        { role: 'system', content: SYSTEM_PROMPT + buildProfileContext(profile) + ragContext + toolContext + scopeInstruction },
         ...priorMessages,
         { role: 'user', content: userMessage },
       ],
