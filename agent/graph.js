@@ -20,7 +20,7 @@ const { StateGraph, Annotation, START, END } = require('@langchain/langgraph');
 const { OpenAI } = require('openai');
 const { retrieve, formatChunksAsContext } = require('../utils/retrieve');
 const { buildProfileContext, SYSTEM_PROMPT } = require('../routes/ask');
-const { isEmergency, isMultiPart, splitParts, factLookup, EMERGENCY_REPLY, DECLINE_REPLY } = require('./tools');
+const { isEmergency, isSmallTalk, isMultiPart, splitParts, factLookup, EMERGENCY_REPLY, DECLINE_REPLY } = require('./tools');
 
 const GEN_MODEL = 'llama-3.3-70b-versatile';
 
@@ -54,7 +54,11 @@ async function retrieveNode(state) {
 
 function triageNode(state) {
   if (isEmergency(state.question)) return { route: 'emergency', trace: ['triage → emergency'] };
-  if (!state.chunks.length) return { route: 'decline', trace: ['triage → decline (no confident sources)'] };
+  if (!state.chunks.length) {
+    // Greetings/small talk are in scope conversationally — answer warmly.
+    if (isSmallTalk(state.question)) return { route: 'answer', trace: ['triage → answer (small talk)'] };
+    return { route: 'decline', trace: ['triage → decline (no confident sources)'] };
+  }
   if (isMultiPart(state.question)) return { route: 'decompose', trace: ['triage → decompose (multi-part)'] };
   return { route: 'answer', trace: ['triage → answer'] };
 }

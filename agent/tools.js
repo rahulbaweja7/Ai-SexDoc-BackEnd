@@ -29,6 +29,26 @@ function isEmergency(text) {
   return EMERGENCY_PATTERNS.some((re) => re.test(t));
 }
 
+// ── Small talk / greetings ───────────────────────────────────────────────────
+// Conversational messages ("hi", "thanks", "who are you") retrieve no facts but
+// are NOT out of scope — they should get a warm reply, not a decline.
+const SMALLTALK_PATTERNS = [
+  /^(thanks?|thank you|ty|thx|much appreciated|appreciate it)\b/,
+  /^(ok(ay)?|cool|nice|great|awesome|got it|gotcha|alright|sounds good|perfect|makes sense)\b/,
+  /^(bye|goodbye|see you|see ya|good ?night|gn|cya|take care)\b/,
+  /^how('?s| is| are)\s+(it going|you|things|your day)/,
+  /^(what'?s up|whats up|wassup)\b/,
+  /(who are you|what are you|what can you do|what do you do|how do you work|what is sera|are you (a )?(real|human|bot|ai))/,
+];
+
+function isSmallTalk(text) {
+  const t = (text || '').trim().toLowerCase().replace(/[’‘]/g, "'").replace(/[!.?,]+$/, '');
+  // A short message that opens with a greeting ("hi", "hey there", "good morning").
+  const greeting = /^(hi+|hey+|hello+|yo|sup|hiya|howdy|heya|hola|good (morning|afternoon|evening|night))\b/;
+  if (greeting.test(t) && t.length <= 15) return true;
+  return SMALLTALK_PATTERNS.some((re) => re.test(t));
+}
+
 // ── Multi-part detection + split (heuristic, no LLM) ─────────────────────────
 // Catches "..., and how often...?" style two-part questions.
 function isMultiPart(text) {
@@ -79,4 +99,4 @@ const DECLINE_REPLY =
   "That's a bit outside what I can help with — I focus on sexual health, relationships, contraception, " +
   "STIs, anatomy, and intimacy. If you have anything in those areas on your mind, I'm here for it, no judgment.";
 
-module.exports = { isEmergency, isMultiPart, splitParts, factLookup, EMERGENCY_PATTERNS, EMERGENCY_REPLY, DECLINE_REPLY };
+module.exports = { isEmergency, isSmallTalk, isMultiPart, splitParts, factLookup, EMERGENCY_PATTERNS, EMERGENCY_REPLY, DECLINE_REPLY };

@@ -3,7 +3,7 @@ const router = express.Router();
 const { OpenAI } = require("openai");
 const jwt = require('jsonwebtoken');
 const { retrieve, formatChunksAsContext } = require('../utils/retrieve');
-const { isEmergency, isMultiPart, splitParts, factLookup, EMERGENCY_REPLY, DECLINE_REPLY } = require('../agent/tools');
+const { isEmergency, isSmallTalk, isMultiPart, splitParts, factLookup, EMERGENCY_REPLY, DECLINE_REPLY } = require('../agent/tools');
 const logger = require('../utils/logger');
 
 const JWT_SECRET = process.env.JWT_SECRET; // validated at startup in server.js
@@ -80,8 +80,9 @@ router.post('/', optionalAuth, async (req, res) => {
     // ── Agent step 2: triage (rules + retrieval confidence, no LLM) ──
     // Emergency wording → escalate to real help instead of answering.
     if (isEmergency(userMessage)) return streamCanned('emergency', EMERGENCY_REPLY);
-    // Nothing cleared the relevance bar → out of scope, decline instead of guessing.
-    if (!chunks.length) return streamCanned('decline', DECLINE_REPLY);
+    // Nothing cleared the relevance bar. Greetings/small talk still get a warm
+    // reply; only a genuinely off-topic question is declined.
+    if (!chunks.length && !isSmallTalk(userMessage)) return streamCanned('decline', DECLINE_REPLY);
 
     // ── Agent step 3: decompose multi-part questions (retrieve each part) ──
     if (isMultiPart(userMessage)) {
