@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../utils/models/User');
 
 const router = express.Router();
+// A Google OAuth client ID is a public identifier (it also ships in the frontend),
+// so a fallback here is not a secret leak. Override via env for other environments.
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '829177934485-qsa66r4mnv6rdu6sho38pfmf1h51grju.apps.googleusercontent.com';
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 

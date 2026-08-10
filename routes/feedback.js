@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'sera_jwt_secret_change_before_deploy';
+const JWT_SECRET = process.env.JWT_SECRET; // validated at startup in server.js
 
 function optionalAuth(req, _res, next) {
   const auth = req.headers.authorization;

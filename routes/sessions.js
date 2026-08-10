@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const Session = require('../utils/models/Session');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'sera_jwt_secret_change_before_deploy';
+const JWT_SECRET = process.env.JWT_SECRET; // validated at startup in server.js
 
 function requireAuth(req, res, next) {
   const auth = req.headers.authorization;

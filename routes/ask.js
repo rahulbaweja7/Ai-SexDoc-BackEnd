@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const { retrieveRelevantChunks, formatChunksAsContext } = require('../utils/retrieve');
 const logger = require('../utils/logger');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'sera_jwt_secret_change_before_deploy';
+const JWT_SECRET = process.env.JWT_SECRET; // validated at startup in server.js
 
 // Optional auth — attaches req.user if token present, but does not block unauthenticated requests
 // This allows logged-out users to still chat, while logged-in users get their profile injected

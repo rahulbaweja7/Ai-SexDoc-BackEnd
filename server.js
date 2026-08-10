@@ -5,6 +5,15 @@ const path = require('path');
 const { rateLimit } = require('express-rate-limit');
 dotenv.config();
 
+// Fail fast if required secrets are missing — never fall back to a hardcoded
+// JWT secret (that would make auth tokens forgeable by anyone).
+const REQUIRED_ENV = ['JWT_SECRET'];
+const missingEnv = REQUIRED_ENV.filter((key) => !process.env[key]);
+if (missingEnv.length) {
+  console.error(`❌ Missing required environment variables: ${missingEnv.join(', ')}. Set them in your .env — see .env.example.`);
+  process.exit(1);
+}
+
 const connectDatabase = require('./utils/mongodb');
 const askRoute = require('./routes/ask');
 const authRoute = require('./routes/auth');
@@ -52,7 +61,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Connect to MongoDB
 connectDatabase();
 
-// Rate limiting — protect Groq API key from abuse
+// Rate limiting — throttle sign-in attempts
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 20,
@@ -61,6 +70,7 @@ const authLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+// Rate limiting — protect the LLM API key (Groq) from abuse
 const chatLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 minute
   max: 30,             // 30 messages per minute per IP
