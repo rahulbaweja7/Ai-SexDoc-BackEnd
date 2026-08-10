@@ -47,18 +47,57 @@ stresses retrieval), 5 multi-hop (needs ≥2 chunks — sets up Phase 3 decompos
 ## Running
 
 ```bash
-# full 40-question baseline
-npm run eval:baseline
-
-# label a run (recommended so files are self-describing)
+# Phase 0 — deterministic baseline (keyword-level fact coverage, no LLM judge)
 npm run eval:baseline -- --label baseline-grounded
 
+# Phase 1 — full harness with LLM-as-judge (faithfulness + relevance + refusal)
+npm run eval -- --label grounded
+
 # smoke test on the first N
-node eval/runBaseline.js --limit 3 --label smoke
+node eval/runEval.js --limit 3 --label smoke
 ```
 
 Requires `.env` with `GROQ_API_KEY`, `COHERE_API_KEY`, `MONGODB_URI`, `MONGODB_DB`.
 Runs at `temperature=0` for reproducibility (production streams at default temp).
+
+## Phase 1 — LLM-as-judge metrics
+
+`runBaseline.js` (Phase 0) scored answers by **exact-substring** keyword matching — it
+undercounts because "over 99%" ≠ "more than 99%". Phase 1 (`runEval.js` + `judge.js`)
+replaces that with a **second LLM acting as judge**, scoring *meaning* not words:
+
+| Metric | Question the judge answers | How |
+|---|---|---|
+| **Faithfulness** | Is every factual claim in the answer supported by the retrieved sources? | Judge extracts each claim, marks supported/unsupported; score = supported/total. RAGAS-style. |
+| **Answer relevance** | Does the answer actually address the question? | 1–5 rating → 0–1. |
+| **Appropriate refusal** | For out-of-scope questions, did it decline/redirect instead of fabricating? | boolean, out-of-scope only. |
+
+Retrieval P/R/F1 stays deterministic (scored against golden labels — stronger than
+RAGAS's LLM-estimated context metrics because we have ground-truth chunk ids).
+
+### Phase 1 baseline results (`eval-grounded`, 40 Q, index fixed)
+
+| Metric | Score |
+|---|---|
+| **Faithfulness** | **0.919** |
+| **Answer relevance** | **0.975** |
+| Retrieval precision / recall / F1 | 0.380 / 0.986 / 0.539 |
+| Out-of-scope appropriate refusal | **1.00** (4/4) |
+| Mean total latency | ~2.4 s (noisy; judge adds no latency to the product) |
+| Cost / run | gen $0.010 + judge $0.020 = **$0.030** |
+
+The harness flagged **6 of 36** answerable questions as containing ≥1 unsupported claim —
+e.g. inventing "start the mini pill 6 weeks after giving birth" (not in sources). These are
+real ungrounded additions the faithfulness metric is designed to catch.
+
+### Caveats (be honest about these in interviews)
+
+- **Self-grading bias:** judge and generator are the same model (`llama-3.3-70b-versatile`).
+  Set `JUDGE_MODEL` to a different model to reduce this. Faithfulness may be slightly optimistic.
+- **Empathy over-flagging:** the judge sometimes marks empathy sentences ("that can be upsetting")
+  as unsupported claims, which slightly *depresses* faithfulness — partially offsetting the bias above.
+- Latency is wall-clock and network-noisy; treat it as a rough trend, not a precise SLA.
+- Retrieval precision is capped ~0.33 by fixed `topK=3` (Phase 2 target).
 
 ## ⚠️ Phase 0 finding: the vector index was broken
 
