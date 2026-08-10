@@ -1,0 +1,342 @@
+{
+  "meta": {
+    "description": "SERA golden evaluation set. Each item ties a user-style question to the corpus chunk ids (see corpus.json) that SHOULD be retrieved, plus key facts that must appear in a faithful answer.",
+    "schema": {
+      "id": "unique question id",
+      "question": "user-style natural language question",
+      "topic": "corpus topic tag",
+      "type": "factual | lay_paraphrase | multi_hop | out_of_scope",
+      "expected_source_ids": "corpus chunk ids that should be retrieved (empty for out_of_scope)",
+      "key_facts": "substrings/claims a correct grounded answer should contain",
+      "expected_behavior": "answer (default) | decline_or_no_source (for out_of_scope / not-in-corpus)"
+    },
+    "corpus_ref": "corpus.json",
+    "count": 40
+  },
+  "questions": [
+    {
+      "id": "q01",
+      "question": "How effective is the combined pill at preventing pregnancy?",
+      "topic": "contraception",
+      "type": "factual",
+      "expected_source_ids": ["c00"],
+      "key_facts": ["more than 99% effective", "taken at the same time every day"]
+    },
+    {
+      "id": "q02",
+      "question": "Can I use the mini pill if I'm breastfeeding?",
+      "topic": "contraception",
+      "type": "factual",
+      "expected_source_ids": ["c01"],
+      "key_facts": ["does not contain oestrogen", "suitable for breastfeeding", "over 99% effective"]
+    },
+    {
+      "id": "q03",
+      "question": "Do condoms protect against STIs as well as pregnancy?",
+      "topic": "contraception",
+      "type": "factual",
+      "expected_source_ids": ["c02"],
+      "key_facts": ["only form of contraception that protects against both", "98% effective"]
+    },
+    {
+      "id": "q04",
+      "question": "How long after unprotected sex can I take the morning-after pill?",
+      "topic": "contraception",
+      "type": "factual",
+      "expected_source_ids": ["c03"],
+      "key_facts": ["up to 72 hours", "most effective the sooner", "copper IUD", "up to 5 days"]
+    },
+    {
+      "id": "q05",
+      "question": "How long does the contraceptive implant last?",
+      "topic": "contraception",
+      "type": "factual",
+      "expected_source_ids": ["c04"],
+      "key_facts": ["up to 3 years", "upper arm", "more than 99% effective"]
+    },
+    {
+      "id": "q06",
+      "question": "What is the most common STI in the UK?",
+      "topic": "STIs",
+      "type": "factual",
+      "expected_source_ids": ["c05"],
+      "key_facts": ["chlamydia", "often has no symptoms", "treated with antibiotics"]
+    },
+    {
+      "id": "q07",
+      "question": "Can gonorrhoea infect the throat?",
+      "topic": "STIs",
+      "type": "factual",
+      "expected_source_ids": ["c06"],
+      "key_facts": ["genitals, rectum, and throat", "antibiotics", "antibiotic-resistant"]
+    },
+    {
+      "id": "q08",
+      "question": "If someone with HIV has an undetectable viral load, can they still pass it on?",
+      "topic": "STIs",
+      "type": "factual",
+      "expected_source_ids": ["c07"],
+      "key_facts": ["undetectable viral load", "cannot pass the virus on", "antiretroviral treatment"]
+    },
+    {
+      "id": "q09",
+      "question": "What is PrEP and how well does it work?",
+      "topic": "STIs",
+      "type": "factual",
+      "expected_source_ids": ["c08"],
+      "key_facts": ["HIV-negative", "about 99%", "does not protect against other STIs"]
+    },
+    {
+      "id": "q10",
+      "question": "Is there a cure for herpes?",
+      "topic": "STIs",
+      "type": "factual",
+      "expected_source_ids": ["c09"],
+      "key_facts": ["no cure", "antiviral medication", "reduce the frequency and severity"]
+    },
+    {
+      "id": "q11",
+      "question": "How often should I get tested for STIs if I have multiple partners?",
+      "topic": "STIs",
+      "type": "factual",
+      "expected_source_ids": ["c10"],
+      "key_facts": ["every 3 to 6 months", "many STIs have no symptoms", "free, confidential testing"]
+    },
+    {
+      "id": "q12",
+      "question": "What counts as a normal menstrual cycle length?",
+      "topic": "anatomy",
+      "type": "factual",
+      "expected_source_ids": ["c11"],
+      "key_facts": ["28 days", "21 to 40 days", "ovulation", "around day 14"]
+    },
+    {
+      "id": "q13",
+      "question": "Does an intact hymen prove someone is a virgin?",
+      "topic": "anatomy",
+      "type": "factual",
+      "expected_source_ids": ["c12"],
+      "key_facts": ["myth", "can stretch or tear", "does not prove virginity"]
+    },
+    {
+      "id": "q14",
+      "question": "How big is the clitoris really?",
+      "topic": "anatomy",
+      "type": "factual",
+      "expected_source_ids": ["c13"],
+      "key_facts": ["larger than the small external tip", "wishbone", "up to 10cm"]
+    },
+    {
+      "id": "q15",
+      "question": "What makes consent valid?",
+      "topic": "relationships",
+      "type": "factual",
+      "expected_source_ids": ["c14"],
+      "key_facts": ["freely given, reversible, informed, enthusiastic, and specific", "cannot consent if", "withdrawn at any time"]
+    },
+    {
+      "id": "q16",
+      "question": "What are the signs of an unhealthy relationship?",
+      "topic": "relationships",
+      "type": "factual",
+      "expected_source_ids": ["c15"],
+      "key_facts": ["controlling behaviour", "jealousy", "pressure", "disrespect for boundaries"]
+    },
+    {
+      "id": "q17",
+      "question": "Can I use any kind of lubricant with condoms?",
+      "topic": "sexual health",
+      "type": "factual",
+      "expected_source_ids": ["c16"],
+      "key_facts": ["water-based", "safe to use with condoms", "oil-based", "degrade latex"]
+    },
+    {
+      "id": "q18",
+      "question": "Why does sex hurt sometimes?",
+      "topic": "sexual health",
+      "type": "factual",
+      "expected_source_ids": ["c17"],
+      "key_facts": ["dyspareunia", "insufficient lubrication", "vaginismus", "endometriosis"]
+    },
+    {
+      "id": "q19",
+      "question": "Is having a low sex drive normal?",
+      "topic": "sexual health",
+      "type": "factual",
+      "expected_source_ids": ["c18"],
+      "key_facts": ["very common", "stress", "antidepressants", "not a problem unless it is causing distress"]
+    },
+    {
+      "id": "q20",
+      "question": "How common is erectile dysfunction?",
+      "topic": "sexual health",
+      "type": "factual",
+      "expected_source_ids": ["c19"],
+      "key_facts": ["around 50%", "40 to 70", "treatable"]
+    },
+    {
+      "id": "q21",
+      "question": "When is a pregnancy test accurate?",
+      "topic": "pregnancy",
+      "type": "factual",
+      "expected_source_ids": ["c20"],
+      "key_facts": ["hCG", "first day of a missed period", "too early", "false negative"]
+    },
+    {
+      "id": "q22",
+      "question": "Does fertility decline with age?",
+      "topic": "pregnancy",
+      "type": "factual",
+      "expected_source_ids": ["c21"],
+      "key_facts": ["declines with age", "after age 35", "20s"]
+    },
+    {
+      "id": "q23",
+      "question": "What's the difference between gender identity and sexual orientation?",
+      "topic": "identity",
+      "type": "factual",
+      "expected_source_ids": ["c22"],
+      "key_facts": ["internal sense of their own gender", "who someone is attracted to", "separate and independent"]
+    },
+    {
+      "id": "q24",
+      "question": "I had unprotected sex last night and I'm scared I might get pregnant — what can I do?",
+      "topic": "contraception",
+      "type": "lay_paraphrase",
+      "expected_source_ids": ["c03"],
+      "key_facts": ["morning-after pill", "72 hours", "copper IUD", "5 days"]
+    },
+    {
+      "id": "q25",
+      "question": "Which type of birth control also stops you catching infections?",
+      "topic": "contraception",
+      "type": "lay_paraphrase",
+      "expected_source_ids": ["c02"],
+      "key_facts": ["condoms", "protects against both pregnancy and sexually transmitted infections"]
+    },
+    {
+      "id": "q26",
+      "question": "That little rod they put in your arm for birth control — how long does it work for?",
+      "topic": "contraception",
+      "type": "lay_paraphrase",
+      "expected_source_ids": ["c04"],
+      "key_facts": ["implant", "up to 3 years"]
+    },
+    {
+      "id": "q27",
+      "question": "I keep losing my erection and I'm worried something's wrong with me.",
+      "topic": "sexual health",
+      "type": "lay_paraphrase",
+      "expected_source_ids": ["c19"],
+      "key_facts": ["erectile dysfunction", "very common", "treatable", "nothing to be ashamed of"]
+    },
+    {
+      "id": "q28",
+      "question": "My periods are all over the place, what could be causing that?",
+      "topic": "anatomy",
+      "type": "lay_paraphrase",
+      "expected_source_ids": ["c11"],
+      "key_facts": ["irregular periods", "stress", "PCOS", "thyroid"]
+    },
+    {
+      "id": "q29",
+      "question": "Is it bad that I basically never want to have sex anymore?",
+      "topic": "sexual health",
+      "type": "lay_paraphrase",
+      "expected_source_ids": ["c18"],
+      "key_facts": ["low libido", "very common", "only a problem if causing distress"]
+    },
+    {
+      "id": "q30",
+      "question": "Can you catch an STI from someone who has no symptoms at all?",
+      "topic": "STIs",
+      "type": "lay_paraphrase",
+      "expected_source_ids": ["c10", "c05"],
+      "key_facts": ["many STIs have no symptoms", "get tested", "only way to know your status"]
+    },
+    {
+      "id": "q31",
+      "question": "What lube is safe to use with silicone sex toys?",
+      "topic": "sexual health",
+      "type": "lay_paraphrase",
+      "expected_source_ids": ["c16"],
+      "key_facts": ["water-based", "silicone-based", "should not be used with silicone toys"]
+    },
+    {
+      "id": "q32",
+      "question": "Do condoms actually protect against STIs, and how often should I still get tested if I have a few partners?",
+      "topic": "STIs",
+      "type": "multi_hop",
+      "expected_source_ids": ["c02", "c10"],
+      "key_facts": ["condoms", "protect against", "every 3 to 6 months"]
+    },
+    {
+      "id": "q33",
+      "question": "I'm HIV negative — what can I take to lower my risk, and does it also cover other STIs?",
+      "topic": "STIs",
+      "type": "multi_hop",
+      "expected_source_ids": ["c08", "c02"],
+      "key_facts": ["PrEP", "about 99%", "does not protect against other STIs", "condoms"]
+    },
+    {
+      "id": "q34",
+      "question": "What are my options right after unprotected sex, and when should I get tested afterwards?",
+      "topic": "STIs",
+      "type": "multi_hop",
+      "expected_source_ids": ["c03", "c10"],
+      "key_facts": ["emergency contraception", "72 hours", "get tested", "unprotected sex with a new partner"]
+    },
+    {
+      "id": "q35",
+      "question": "What's the difference between the combined pill and the mini pill, and are they equally effective?",
+      "topic": "contraception",
+      "type": "multi_hop",
+      "expected_source_ids": ["c00", "c01"],
+      "key_facts": ["combined", "oestrogen and progesterone", "progestogen-only", "does not contain oestrogen", "over 99%"]
+    },
+    {
+      "id": "q36",
+      "question": "Could my painful sex and my low sex drive be connected?",
+      "topic": "sexual health",
+      "type": "multi_hop",
+      "expected_source_ids": ["c17", "c18"],
+      "key_facts": ["dyspareunia", "low libido", "GP", "sex therapist"]
+    },
+    {
+      "id": "q37",
+      "question": "What's the best pizza topping?",
+      "topic": "out_of_scope",
+      "type": "out_of_scope",
+      "expected_source_ids": [],
+      "key_facts": [],
+      "expected_behavior": "decline_or_no_source"
+    },
+    {
+      "id": "q38",
+      "question": "I'm having sudden crushing chest pain and my left arm is numb — what's wrong with me?",
+      "topic": "out_of_scope",
+      "type": "out_of_scope",
+      "expected_source_ids": [],
+      "key_facts": ["emergency", "seek immediate medical help"],
+      "expected_behavior": "decline_or_no_source"
+    },
+    {
+      "id": "q39",
+      "question": "How do I get an abortion and how much does it cost?",
+      "topic": "out_of_scope",
+      "type": "out_of_scope",
+      "expected_source_ids": [],
+      "key_facts": [],
+      "expected_behavior": "decline_or_no_source"
+    },
+    {
+      "id": "q40",
+      "question": "Where exactly is the prostate and how do you stimulate it?",
+      "topic": "out_of_scope",
+      "type": "out_of_scope",
+      "expected_source_ids": [],
+      "key_facts": [],
+      "expected_behavior": "decline_or_no_source"
+    }
+  ]
+}

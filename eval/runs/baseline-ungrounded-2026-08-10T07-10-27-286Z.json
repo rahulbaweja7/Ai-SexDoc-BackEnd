@@ -1,0 +1,1475 @@
+{
+  "label": "baseline-ungrounded",
+  "timestamp": "2026-08-10T07:10:27.286Z",
+  "config": {
+    "gen_model": "llama-3.3-70b-versatile",
+    "embed_model": "cohere embed-english-v3.0 (1024d)",
+    "top_k": 3,
+    "temperature": 0,
+    "pricing_per_million": {
+      "input": 0.59,
+      "output": 0.79
+    },
+    "hybrid": false,
+    "rerank": false,
+    "metadata_filter": false
+  },
+  "aggregate": {
+    "questions": 40,
+    "retrieval_live": false,
+    "answerable_count": 36,
+    "retrieval_precision_mean": 0,
+    "retrieval_recall_mean": 0,
+    "retrieval_f1_mean": 0,
+    "fact_coverage_mean": 0.2301,
+    "oos_count": 4,
+    "oos_retrieved_something_rate": 0,
+    "oos_mean_top_score": null,
+    "latency_ms": {
+      "retrieval_mean": 184.2,
+      "generation_mean": 1049.9,
+      "total_mean": 1234
+    },
+    "tokens": {
+      "prompt_total": 5407,
+      "completion_total": 3732,
+      "total": 9139
+    },
+    "cost_usd_total": 0.006137,
+    "errors": 0
+  },
+  "results": [
+    {
+      "id": "q01",
+      "question": "How effective is the combined pill at preventing pregnancy?",
+      "type": "factual",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c00"
+      ],
+      "retrieval_ms": 284,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 584,
+      "answer": "The combined pill is really effective at preventing pregnancy, with a success rate of about 99% when taken perfectly. However, in real life, it's more like 91-94% effective because people might forget to take a pill or two, or take them at the wrong time. It's still a great option for many people, but it's not foolproof, so it's always a good idea to have a backup plan, like using condoms too.",
+      "tokens": {
+        "prompt": 133,
+        "completion": 94,
+        "total": 227
+      },
+      "cost_usd": 0.000153,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 2,
+        "ratio": 0,
+        "missing": [
+          "more than 99% effective",
+          "taken at the same time every day"
+        ]
+      },
+      "total_ms": 868
+    },
+    {
+      "id": "q02",
+      "question": "Can I use the mini pill if I'm breastfeeding?",
+      "type": "factual",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c01"
+      ],
+      "retrieval_ms": 180,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 517,
+      "answer": "The mini pill, also known as the progestin-only pill, is usually a good option for breastfeeding moms because it's less likely to affect milk supply compared to combination pills. However, it's always best to check with your healthcare provider, as they can give you personalized advice based on your specific situation and health history. They can help you weigh the benefits and risks and make an informed decision that's right for you and your baby.",
+      "tokens": {
+        "prompt": 134,
+        "completion": 89,
+        "total": 223
+      },
+      "cost_usd": 0.000149,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 3,
+        "ratio": 0,
+        "missing": [
+          "does not contain oestrogen",
+          "suitable for breastfeeding",
+          "over 99% effective"
+        ]
+      },
+      "total_ms": 697
+    },
+    {
+      "id": "q03",
+      "question": "Do condoms protect against STIs as well as pregnancy?",
+      "type": "factual",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c02"
+      ],
+      "retrieval_ms": 196,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 599,
+      "answer": "Condoms are a great way to protect against both pregnancy and many STIs, but they're not 100% effective against all STIs. They can significantly reduce the risk of catching STIs like chlamydia, gonorrhea, and HIV, but they might not protect as well against STIs that cause skin-to-skin infections, like herpes or HPV. Using condoms consistently and correctly is still one of the best ways to reduce your risk, though.",
+      "tokens": {
+        "prompt": 134,
+        "completion": 96,
+        "total": 230
+      },
+      "cost_usd": 0.000155,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 2,
+        "ratio": 0,
+        "missing": [
+          "only form of contraception that protects against both",
+          "98% effective"
+        ]
+      },
+      "total_ms": 795
+    },
+    {
+      "id": "q04",
+      "question": "How long after unprotected sex can I take the morning-after pill?",
+      "type": "factual",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c03"
+      ],
+      "retrieval_ms": 176,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 507,
+      "answer": "You can take the morning-after pill up to 5 days after unprotected sex, but it's most effective when taken within 72 hours. The sooner you take it, the better it works. It's not a substitute for regular birth control, but it can help prevent pregnancy in a pinch. If you're considering taking it, you should be able to get it at a pharmacy or clinic without a prescription.",
+      "tokens": {
+        "prompt": 136,
+        "completion": 83,
+        "total": 219
+      },
+      "cost_usd": 0.000146,
+      "fact_coverage": {
+        "covered": 1,
+        "total": 4,
+        "ratio": 0.25,
+        "missing": [
+          "up to 72 hours",
+          "most effective the sooner",
+          "copper IUD"
+        ]
+      },
+      "total_ms": 683
+    },
+    {
+      "id": "q05",
+      "question": "How long does the contraceptive implant last?",
+      "type": "factual",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c04"
+      ],
+      "retrieval_ms": 170,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 463,
+      "answer": "The contraceptive implant, also known as Nexplanon or Implanon, is a small rod that's inserted under the skin of your upper arm and can last for up to 3 years. It releases a steady dose of hormones to prevent pregnancy, and it's over 99% effective. After 3 years, you'll need to have it removed and replaced with a new one if you want to continue using it as your birth control method.",
+      "tokens": {
+        "prompt": 131,
+        "completion": 91,
+        "total": 222
+      },
+      "cost_usd": 0.000149,
+      "fact_coverage": {
+        "covered": 2,
+        "total": 3,
+        "ratio": 0.6666666666666666,
+        "missing": [
+          "more than 99% effective"
+        ]
+      },
+      "total_ms": 633
+    },
+    {
+      "id": "q06",
+      "question": "What is the most common STI in the UK?",
+      "type": "factual",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c05"
+      ],
+      "retrieval_ms": 176,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 453,
+      "answer": "In the UK, the most common STI is chlamydia - it's a bacterial infection that can be easily treated with antibiotics, but it's often symptomless, which is why it can spread so easily. According to the NHS, there are over 200,000 cases of chlamydia reported each year in England alone. It's really important to get regular check-ups if you're sexually active, especially if you've had a new partner or haven't used protection.",
+      "tokens": {
+        "prompt": 134,
+        "completion": 99,
+        "total": 233
+      },
+      "cost_usd": 0.000157,
+      "fact_coverage": {
+        "covered": 2,
+        "total": 3,
+        "ratio": 0.6666666666666666,
+        "missing": [
+          "often has no symptoms"
+        ]
+      },
+      "total_ms": 629
+    },
+    {
+      "id": "q07",
+      "question": "Can gonorrhoea infect the throat?",
+      "type": "factual",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c06"
+      ],
+      "retrieval_ms": 192,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 596,
+      "answer": "Yeah, gonorrhoea can infect the throat, it's called pharyngeal gonorrhoea. This can happen if you have oral sex with someone who has gonorrhoea, and it's more common in people who give oral sex. Symptoms can be mild or even nonexistent, but it's still important to get tested and treated if you think you've been exposed.",
+      "tokens": {
+        "prompt": 132,
+        "completion": 79,
+        "total": 211
+      },
+      "cost_usd": 0.00014,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 3,
+        "ratio": 0,
+        "missing": [
+          "genitals, rectum, and throat",
+          "antibiotics",
+          "antibiotic-resistant"
+        ]
+      },
+      "total_ms": 788
+    },
+    {
+      "id": "q08",
+      "question": "If someone with HIV has an undetectable viral load, can they still pass it on?",
+      "type": "factual",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c07"
+      ],
+      "retrieval_ms": 178,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 525,
+      "answer": "Having an undetectable viral load is a game-changer - it means the amount of HIV in their blood is so low that it can't be detected by standard tests. When someone with HIV has an undetectable viral load, the risk of passing it on to their partner is extremely low, almost zero. This is because there's hardly any virus present to transmit, so with proper treatment and an undetectable viral load, they can have a virtually normal sex life without worrying about infecting their partner.",
+      "tokens": {
+        "prompt": 142,
+        "completion": 104,
+        "total": 246
+      },
+      "cost_usd": 0.000166,
+      "fact_coverage": {
+        "covered": 1,
+        "total": 3,
+        "ratio": 0.3333333333333333,
+        "missing": [
+          "cannot pass the virus on",
+          "antiretroviral treatment"
+        ]
+      },
+      "total_ms": 703
+    },
+    {
+      "id": "q09",
+      "question": "What is PrEP and how well does it work?",
+      "type": "factual",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c08"
+      ],
+      "retrieval_ms": 186,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 575,
+      "answer": "PrEP, or Pre-Exposure Prophylaxis, is a daily medication that helps prevent HIV infection in people who are at high risk. It's super effective - when taken consistently, PrEP can reduce the risk of getting HIV from sex by about 99% and from injection drug use by about 74%. It's not a cure, but it's a powerful tool for staying safe and healthy, and it's usually well-tolerated with minimal side effects.",
+      "tokens": {
+        "prompt": 134,
+        "completion": 96,
+        "total": 230
+      },
+      "cost_usd": 0.000155,
+      "fact_coverage": {
+        "covered": 1,
+        "total": 3,
+        "ratio": 0.3333333333333333,
+        "missing": [
+          "HIV-negative",
+          "does not protect against other STIs"
+        ]
+      },
+      "total_ms": 761
+    },
+    {
+      "id": "q10",
+      "question": "Is there a cure for herpes?",
+      "type": "factual",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c09"
+      ],
+      "retrieval_ms": 188,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 517,
+      "answer": "There isn't a cure for herpes, but there are treatments that can help manage the symptoms and reduce the frequency of outbreaks. Antiviral medications can be taken daily to suppress the virus or as needed to shorten the duration of an outbreak. It's also important to note that even without symptoms, herpes can still be transmitted to partners, so using protection and discussing your status with them is key.",
+      "tokens": {
+        "prompt": 130,
+        "completion": 80,
+        "total": 210
+      },
+      "cost_usd": 0.00014,
+      "fact_coverage": {
+        "covered": 1,
+        "total": 3,
+        "ratio": 0.3333333333333333,
+        "missing": [
+          "no cure",
+          "reduce the frequency and severity"
+        ]
+      },
+      "total_ms": 705
+    },
+    {
+      "id": "q11",
+      "question": "How often should I get tested for STIs if I have multiple partners?",
+      "type": "factual",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c10"
+      ],
+      "retrieval_ms": 186,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 419,
+      "answer": "If you have multiple partners, it's a good idea to get tested for STIs every 3-6 months. This is because the more partners you have, the higher your risk of getting an STI. You should also get tested after any new partner or if you notice any symptoms. Remember, getting tested is a normal part of taking care of your sexual health, and it's always better to be safe than sorry.",
+      "tokens": {
+        "prompt": 138,
+        "completion": 87,
+        "total": 225
+      },
+      "cost_usd": 0.00015,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 3,
+        "ratio": 0,
+        "missing": [
+          "every 3 to 6 months",
+          "many STIs have no symptoms",
+          "free, confidential testing"
+        ]
+      },
+      "total_ms": 605
+    },
+    {
+      "id": "q12",
+      "question": "What counts as a normal menstrual cycle length?",
+      "type": "factual",
+      "topic": "anatomy",
+      "expected_source_ids": [
+        "c11"
+      ],
+      "retrieval_ms": 174,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 603,
+      "answer": "A normal menstrual cycle can range from about 21 to 35 days, with the average being around 28 days. But what's normal for one person might be different for another, and it's not uncommon for cycles to vary from month to month. As long as your periods are coming regularly and you're not experiencing any heavy bleeding or other issues, you're probably in a healthy range. If you're ever concerned, it's always a good idea to chat with a healthcare provider.",
+      "tokens": {
+        "prompt": 132,
+        "completion": 99,
+        "total": 231
+      },
+      "cost_usd": 0.000156,
+      "fact_coverage": {
+        "covered": 1,
+        "total": 4,
+        "ratio": 0.25,
+        "missing": [
+          "21 to 40 days",
+          "ovulation",
+          "around day 14"
+        ]
+      },
+      "total_ms": 777
+    },
+    {
+      "id": "q13",
+      "question": "Does an intact hymen prove someone is a virgin?",
+      "type": "factual",
+      "topic": "anatomy",
+      "expected_source_ids": [
+        "c12"
+      ],
+      "retrieval_ms": 178,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 559,
+      "answer": "No, it doesn't. The hymen is a thin piece of tissue that can be stretched or torn for lots of reasons, not just sex - like sports, using tampons, or even just growing and developing. So, having an intact hymen doesn't necessarily mean someone is a virgin, and not having one doesn't mean they're not. It's really not a reliable way to measure someone's sexual history.",
+      "tokens": {
+        "prompt": 134,
+        "completion": 86,
+        "total": 220
+      },
+      "cost_usd": 0.000147,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 3,
+        "ratio": 0,
+        "missing": [
+          "myth",
+          "can stretch or tear",
+          "does not prove virginity"
+        ]
+      },
+      "total_ms": 737
+    },
+    {
+      "id": "q14",
+      "question": "How big is the clitoris really?",
+      "type": "factual",
+      "topic": "anatomy",
+      "expected_source_ids": [
+        "c13"
+      ],
+      "retrieval_ms": 171,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 691,
+      "answer": "The clitoris is actually a lot bigger than most people think - it's not just the small, visible part on the outside. The clitoris has a lot of internal structures, like the crura and the bulbs, that are hidden beneath the surface, and these can be quite extensive, extending several inches inside the body. So, while the visible part might be small, the whole clitoris is actually pretty substantial. It's a really important part of female anatomy and plays a big role in pleasure and sensation.",
+      "tokens": {
+        "prompt": 131,
+        "completion": 104,
+        "total": 235
+      },
+      "cost_usd": 0.000159,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 3,
+        "ratio": 0,
+        "missing": [
+          "larger than the small external tip",
+          "wishbone",
+          "up to 10cm"
+        ]
+      },
+      "total_ms": 862
+    },
+    {
+      "id": "q15",
+      "question": "What makes consent valid?",
+      "type": "factual",
+      "topic": "relationships",
+      "expected_source_ids": [
+        "c14"
+      ],
+      "retrieval_ms": 218,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 495,
+      "answer": "Valid consent is all about making sure everyone involved is on the same page and comfortable with what's happening. It means that someone is giving their clear and enthusiastic agreement to do something, without being pressured or coerced. They should be able to understand what they're agreeing to, and be free to change their mind or say no at any time.",
+      "tokens": {
+        "prompt": 128,
+        "completion": 70,
+        "total": 198
+      },
+      "cost_usd": 0.000131,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 3,
+        "ratio": 0,
+        "missing": [
+          "freely given, reversible, informed, enthusiastic, and specific",
+          "cannot consent if",
+          "withdrawn at any time"
+        ]
+      },
+      "total_ms": 713
+    },
+    {
+      "id": "q16",
+      "question": "What are the signs of an unhealthy relationship?",
+      "type": "factual",
+      "topic": "relationships",
+      "expected_source_ids": [
+        "c15"
+      ],
+      "retrieval_ms": 166,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 590,
+      "answer": "If you're feeling consistently unhappy, anxious, or unsure about your relationship, that's a sign something's off. Unhealthy relationships often involve control, manipulation, or disrespect - like your partner constantly checking in on you, making you feel bad about yourself, or disregarding your boundaries. It's also a red flag if you feel like you're walking on eggshells around your partner or can't be yourself. Remember, you deserve to feel safe, respected, and valued in a relationship.",
+      "tokens": {
+        "prompt": 132,
+        "completion": 100,
+        "total": 232
+      },
+      "cost_usd": 0.000157,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 4,
+        "ratio": 0,
+        "missing": [
+          "controlling behaviour",
+          "jealousy",
+          "pressure",
+          "disrespect for boundaries"
+        ]
+      },
+      "total_ms": 756
+    },
+    {
+      "id": "q17",
+      "question": "Can I use any kind of lubricant with condoms?",
+      "type": "factual",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c16"
+      ],
+      "retrieval_ms": 180,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 499,
+      "answer": "Not all lubricants are created equal when it comes to using them with condoms. You should only use water-based or silicone-based lubricants with condoms, as oil-based lubricants like petroleum jelly or coconut oil can cause the condom to break. Using the right kind of lube can actually help prevent condoms from breaking and make sex more comfortable.",
+      "tokens": {
+        "prompt": 134,
+        "completion": 69,
+        "total": 203
+      },
+      "cost_usd": 0.000134,
+      "fact_coverage": {
+        "covered": 2,
+        "total": 4,
+        "ratio": 0.5,
+        "missing": [
+          "safe to use with condoms",
+          "degrade latex"
+        ]
+      },
+      "total_ms": 679
+    },
+    {
+      "id": "q18",
+      "question": "Why does sex hurt sometimes?",
+      "type": "factual",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c17"
+      ],
+      "retrieval_ms": 190,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 518,
+      "answer": "There can be a few reasons why sex hurts sometimes, like if you're not feeling fully relaxed or aroused, or if there's not enough lubrication. It could also be due to a medical issue, like an infection or a condition that affects your reproductive system. If it's happening a lot, it's a good idea to talk to a healthcare provider to figure out what's going on and find a solution that works for you. They can help you get to the bottom of it and make sex more comfortable and enjoyable.",
+      "tokens": {
+        "prompt": 129,
+        "completion": 106,
+        "total": 235
+      },
+      "cost_usd": 0.00016,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 4,
+        "ratio": 0,
+        "missing": [
+          "dyspareunia",
+          "insufficient lubrication",
+          "vaginismus",
+          "endometriosis"
+        ]
+      },
+      "total_ms": 708
+    },
+    {
+      "id": "q19",
+      "question": "Is having a low sex drive normal?",
+      "type": "factual",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c18"
+      ],
+      "retrieval_ms": 175,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 466,
+      "answer": "Having a low sex drive is totally normal, and it's more common than you might think. Lots of people experience fluctuations in their libido, and it can be influenced by all sorts of things like stress, hormones, relationships, and even just life in general. It's not something to be worried about, and if it's bothering you, you can always talk to a healthcare provider or a therapist to figure out what might be going on and find ways to address it.",
+      "tokens": {
+        "prompt": 131,
+        "completion": 95,
+        "total": 226
+      },
+      "cost_usd": 0.000152,
+      "fact_coverage": {
+        "covered": 1,
+        "total": 4,
+        "ratio": 0.25,
+        "missing": [
+          "very common",
+          "antidepressants",
+          "not a problem unless it is causing distress"
+        ]
+      },
+      "total_ms": 641
+    },
+    {
+      "id": "q20",
+      "question": "How common is erectile dysfunction?",
+      "type": "factual",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c19"
+      ],
+      "retrieval_ms": 179,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 485,
+      "answer": "Erectile dysfunction, or ED, is actually pretty common - it's estimated that about 1 in 5 men experience it at some point in their lives. It can affect guys of all ages, but it's more likely to happen as men get older. Don't worry, though, there are lots of ways to address ED, and talking to a doctor or a healthcare provider can be a great first step.",
+      "tokens": {
+        "prompt": 129,
+        "completion": 85,
+        "total": 214
+      },
+      "cost_usd": 0.000143,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 3,
+        "ratio": 0,
+        "missing": [
+          "around 50%",
+          "40 to 70",
+          "treatable"
+        ]
+      },
+      "total_ms": 664
+    },
+    {
+      "id": "q21",
+      "question": "When is a pregnancy test accurate?",
+      "type": "factual",
+      "topic": "pregnancy",
+      "expected_source_ids": [
+        "c20"
+      ],
+      "retrieval_ms": 177,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 409,
+      "answer": "A pregnancy test is usually accurate when taken after a missed period, as that's when levels of the hormone hCG are high enough to be detected. If you take it too early, you might get a false negative, even if you are pregnant. It's best to wait until at least a week after your period was supposed to start for the most accurate results.",
+      "tokens": {
+        "prompt": 130,
+        "completion": 74,
+        "total": 204
+      },
+      "cost_usd": 0.000135,
+      "fact_coverage": {
+        "covered": 3,
+        "total": 4,
+        "ratio": 0.75,
+        "missing": [
+          "first day of a missed period"
+        ]
+      },
+      "total_ms": 586
+    },
+    {
+      "id": "q22",
+      "question": "Does fertility decline with age?",
+      "type": "factual",
+      "topic": "pregnancy",
+      "expected_source_ids": [
+        "c21"
+      ],
+      "retrieval_ms": 215,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 560,
+      "answer": "Yeah, fertility does decline with age for both men and women, but it's more noticeable in women. For women, fertility starts to drop around age 30 and declines more sharply after 35, while men's fertility also decreases with age, but it's a more gradual process. This doesn't mean it's impossible to get pregnant at an older age, but it can be more challenging.",
+      "tokens": {
+        "prompt": 129,
+        "completion": 80,
+        "total": 209
+      },
+      "cost_usd": 0.000139,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 3,
+        "ratio": 0,
+        "missing": [
+          "declines with age",
+          "after age 35",
+          "20s"
+        ]
+      },
+      "total_ms": 775
+    },
+    {
+      "id": "q23",
+      "question": "What's the difference between gender identity and sexual orientation?",
+      "type": "factual",
+      "topic": "identity",
+      "expected_source_ids": [
+        "c22"
+      ],
+      "retrieval_ms": 188,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 566,
+      "answer": "So, gender identity is about how you see yourself - whether you identify as male, female, or somewhere in between, or not at all. It's about your own sense of self and how you feel about your gender. Sexual orientation, on the other hand, is about who you're attracted to, whether that's people of the same gender, a different gender, or multiple genders. They're two separate things, and it's totally possible for someone's gender identity and sexual orientation to be different from what society might expect.",
+      "tokens": {
+        "prompt": 134,
+        "completion": 107,
+        "total": 241
+      },
+      "cost_usd": 0.000164,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 3,
+        "ratio": 0,
+        "missing": [
+          "internal sense of their own gender",
+          "who someone is attracted to",
+          "separate and independent"
+        ]
+      },
+      "total_ms": 754
+    },
+    {
+      "id": "q24",
+      "question": "I had unprotected sex last night and I'm scared I might get pregnant — what can I do?",
+      "type": "lay_paraphrase",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c03"
+      ],
+      "retrieval_ms": 205,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 626,
+      "answer": "That can be really scary and overwhelming. If you're worried about getting pregnant, you can consider taking the morning-after pill, also known as emergency contraception, which can help prevent pregnancy if taken within 72 hours of unprotected sex. You can get it at a pharmacy or clinic, and it's a good idea to talk to a healthcare provider or a nurse for guidance on what to do next. They can also help you figure out your options and support you through this.",
+      "tokens": {
+        "prompt": 143,
+        "completion": 95,
+        "total": 238
+      },
+      "cost_usd": 0.000159,
+      "fact_coverage": {
+        "covered": 2,
+        "total": 4,
+        "ratio": 0.5,
+        "missing": [
+          "copper IUD",
+          "5 days"
+        ]
+      },
+      "total_ms": 831
+    },
+    {
+      "id": "q25",
+      "question": "Which type of birth control also stops you catching infections?",
+      "type": "lay_paraphrase",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c02"
+      ],
+      "retrieval_ms": 177,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 400,
+      "answer": "You're thinking of protection that covers both birth control and STIs. Condoms are your best bet - they're the only type of birth control that also helps prevent the spread of sexually transmitted infections. They come in both male and female versions, and when used correctly, they're pretty effective.",
+      "tokens": {
+        "prompt": 134,
+        "completion": 61,
+        "total": 195
+      },
+      "cost_usd": 0.000127,
+      "fact_coverage": {
+        "covered": 1,
+        "total": 2,
+        "ratio": 0.5,
+        "missing": [
+          "protects against both pregnancy and sexually transmitted infections"
+        ]
+      },
+      "total_ms": 577
+    },
+    {
+      "id": "q26",
+      "question": "That little rod they put in your arm for birth control — how long does it work for?",
+      "type": "lay_paraphrase",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c04"
+      ],
+      "retrieval_ms": 175,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 534,
+      "answer": "You're thinking of an implant, like Nexplanon. It's a small rod that's inserted under the skin of your upper arm, and it can provide birth control for up to 5 years. It releases a steady dose of hormones to prevent pregnancy, and it's a pretty low-maintenance option once it's in place. If you decide you want to get pregnant or switch to a different method, it can be removed by a healthcare provider at any time.",
+      "tokens": {
+        "prompt": 142,
+        "completion": 95,
+        "total": 237
+      },
+      "cost_usd": 0.000159,
+      "fact_coverage": {
+        "covered": 1,
+        "total": 2,
+        "ratio": 0.5,
+        "missing": [
+          "up to 3 years"
+        ]
+      },
+      "total_ms": 709
+    },
+    {
+      "id": "q27",
+      "question": "I keep losing my erection and I'm worried something's wrong with me.",
+      "type": "lay_paraphrase",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c19"
+      ],
+      "retrieval_ms": 178,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 499,
+      "answer": "Losing an erection can be really frustrating and worrying, but it's actually pretty common. It can be caused by all sorts of things, like stress, anxiety, or even just being tired, so it doesn't necessarily mean there's anything wrong with you physically. It might be helpful to talk to a doctor or a therapist who can help you figure out what's going on and find a solution that works for you.",
+      "tokens": {
+        "prompt": 138,
+        "completion": 85,
+        "total": 223
+      },
+      "cost_usd": 0.000149,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 4,
+        "ratio": 0,
+        "missing": [
+          "erectile dysfunction",
+          "very common",
+          "treatable",
+          "nothing to be ashamed of"
+        ]
+      },
+      "total_ms": 677
+    },
+    {
+      "id": "q28",
+      "question": "My periods are all over the place, what could be causing that?",
+      "type": "lay_paraphrase",
+      "topic": "anatomy",
+      "expected_source_ids": [
+        "c11"
+      ],
+      "retrieval_ms": 166,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 471,
+      "answer": "That can be really frustrating and stressful. There are lots of possible reasons why your periods might be irregular, like hormonal changes, stress, weight fluctuations, or certain medical conditions. It's also possible that it's just your body's natural rhythm, especially if you're new to getting periods or are nearing menopause. You might want to talk to a healthcare provider to figure out what's going on and get some personalized advice.",
+      "tokens": {
+        "prompt": 137,
+        "completion": 86,
+        "total": 223
+      },
+      "cost_usd": 0.000149,
+      "fact_coverage": {
+        "covered": 1,
+        "total": 4,
+        "ratio": 0.25,
+        "missing": [
+          "irregular periods",
+          "PCOS",
+          "thyroid"
+        ]
+      },
+      "total_ms": 637
+    },
+    {
+      "id": "q29",
+      "question": "Is it bad that I basically never want to have sex anymore?",
+      "type": "lay_paraphrase",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c18"
+      ],
+      "retrieval_ms": 167,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 518,
+      "answer": "That can be a really tough and vulnerable thing to admit, and it's totally okay to feel that way. A decrease in libido is more common than you might think, and it can be caused by a lot of different factors, like stress, hormonal changes, or relationship issues. It might be helpful to talk to a healthcare provider or a therapist to figure out what's going on and see if there are any underlying issues that need to be addressed. How are you feeling about this change, is it causing you any distress or anxiety?",
+      "tokens": {
+        "prompt": 136,
+        "completion": 108,
+        "total": 244
+      },
+      "cost_usd": 0.000166,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 3,
+        "ratio": 0,
+        "missing": [
+          "low libido",
+          "very common",
+          "only a problem if causing distress"
+        ]
+      },
+      "total_ms": 685
+    },
+    {
+      "id": "q30",
+      "question": "Can you catch an STI from someone who has no symptoms at all?",
+      "type": "lay_paraphrase",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c10",
+        "c05"
+      ],
+      "retrieval_ms": 210,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 514,
+      "answer": "Yeah, it's totally possible to catch an STI from someone who doesn't have any symptoms. Some people can carry STIs without showing any signs, and they can still pass them on to their partners. This is why getting tested regularly is so important, even if you and your partner seem perfectly healthy. It's always better to be safe than sorry, right?",
+      "tokens": {
+        "prompt": 138,
+        "completion": 75,
+        "total": 213
+      },
+      "cost_usd": 0.000141,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 3,
+        "ratio": 0,
+        "missing": [
+          "many STIs have no symptoms",
+          "get tested",
+          "only way to know your status"
+        ]
+      },
+      "total_ms": 724
+    },
+    {
+      "id": "q31",
+      "question": "What lube is safe to use with silicone sex toys?",
+      "type": "lay_paraphrase",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c16"
+      ],
+      "retrieval_ms": 171,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 2589,
+      "answer": "When it comes to using lube with silicone sex toys, you'll want to stick with water-based or oil-based lubes. Silicone-based lubes can actually damage the material of your toy, so it's best to avoid those. Water-based lubes are usually a safe bet and easy to clean up, but if you prefer something a bit longer-lasting, oil-based lubes can work too - just be sure to clean your toy thoroughly after use.",
+      "tokens": {
+        "prompt": 135,
+        "completion": 92,
+        "total": 227
+      },
+      "cost_usd": 0.000152,
+      "fact_coverage": {
+        "covered": 2,
+        "total": 3,
+        "ratio": 0.6666666666666666,
+        "missing": [
+          "should not be used with silicone toys"
+        ]
+      },
+      "total_ms": 2760
+    },
+    {
+      "id": "q32",
+      "question": "Do condoms actually protect against STIs, and how often should I still get tested if I have a few partners?",
+      "type": "multi_hop",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c02",
+        "c10"
+      ],
+      "retrieval_ms": 168,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 2744,
+      "answer": "Condoms are super effective in reducing the risk of STIs, but they're not 100% foolproof - they can break or slip off, and they might not cover all the affected areas. That's why it's still important to get tested regularly, especially if you have multiple partners. As a general rule, it's a good idea to get tested every 3-6 months if you're having sex with new or multiple partners - it's just a good way to stay on top of your health and catch anything early if it does happen.",
+      "tokens": {
+        "prompt": 146,
+        "completion": 113,
+        "total": 259
+      },
+      "cost_usd": 0.000175,
+      "fact_coverage": {
+        "covered": 1,
+        "total": 3,
+        "ratio": 0.3333333333333333,
+        "missing": [
+          "protect against",
+          "every 3 to 6 months"
+        ]
+      },
+      "total_ms": 2912
+    },
+    {
+      "id": "q33",
+      "question": "I'm HIV negative — what can I take to lower my risk, and does it also cover other STIs?",
+      "type": "multi_hop",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c08",
+        "c02"
+      ],
+      "retrieval_ms": 187,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 2608,
+      "answer": "You're taking proactive steps to protect your health, which is great. To lower your risk of HIV, you can consider taking Pre-Exposure Prophylaxis (PrEP), a daily medication that's highly effective in preventing HIV transmission. However, PrEP doesn't protect against other STIs, so it's still important to use condoms and get regular STI screenings. It's also a good idea to discuss your overall risk and health plan with a healthcare provider to determine the best approach for you.",
+      "tokens": {
+        "prompt": 146,
+        "completion": 102,
+        "total": 248
+      },
+      "cost_usd": 0.000167,
+      "fact_coverage": {
+        "covered": 2,
+        "total": 4,
+        "ratio": 0.5,
+        "missing": [
+          "about 99%",
+          "does not protect against other STIs"
+        ]
+      },
+      "total_ms": 2795
+    },
+    {
+      "id": "q34",
+      "question": "What are my options right after unprotected sex, and when should I get tested afterwards?",
+      "type": "multi_hop",
+      "topic": "STIs",
+      "expected_source_ids": [
+        "c03",
+        "c10"
+      ],
+      "retrieval_ms": 177,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 2570,
+      "answer": "If you've had unprotected sex, you've got a few options to consider. You can take emergency contraception, like the morning-after pill, to help prevent pregnancy - it's most effective when taken within 72 hours. You should also consider getting tested for STIs, but it's generally recommended to wait at least 7-10 days after exposure to get accurate results. It's a good idea to talk to a healthcare provider or visit a clinic for guidance on what's best for your situation.",
+      "tokens": {
+        "prompt": 140,
+        "completion": 101,
+        "total": 241
+      },
+      "cost_usd": 0.000162,
+      "fact_coverage": {
+        "covered": 2,
+        "total": 4,
+        "ratio": 0.5,
+        "missing": [
+          "get tested",
+          "unprotected sex with a new partner"
+        ]
+      },
+      "total_ms": 2747
+    },
+    {
+      "id": "q35",
+      "question": "What's the difference between the combined pill and the mini pill, and are they equally effective?",
+      "type": "multi_hop",
+      "topic": "contraception",
+      "expected_source_ids": [
+        "c00",
+        "c01"
+      ],
+      "retrieval_ms": 186,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 2656,
+      "answer": "The main difference between the combined pill and the mini pill is that the combined pill contains both estrogen and progesterone, while the mini pill only contains progesterone. This means the combined pill can have more side effects, like breast tenderness or mood changes, but it's also more effective at regulating periods and reducing menstrual cramps. Both pills are pretty effective at preventing pregnancy, but the combined pill is slightly more effective, with a failure rate of about 0.1-0.3% compared to the mini pill's 0.5-1%. However, the mini pill is a good option for women who can't take estrogen or are breastfeeding.",
+      "tokens": {
+        "prompt": 142,
+        "completion": 135,
+        "total": 277
+      },
+      "cost_usd": 0.00019,
+      "fact_coverage": {
+        "covered": 1,
+        "total": 5,
+        "ratio": 0.2,
+        "missing": [
+          "oestrogen and progesterone",
+          "progestogen-only",
+          "does not contain oestrogen",
+          "over 99%"
+        ]
+      },
+      "total_ms": 2842
+    },
+    {
+      "id": "q36",
+      "question": "Could my painful sex and my low sex drive be connected?",
+      "type": "multi_hop",
+      "topic": "sexual health",
+      "expected_source_ids": [
+        "c17",
+        "c18"
+      ],
+      "retrieval_ms": 173,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": 0,
+        "f1": 0,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 2608,
+      "answer": "That can be really frustrating and upsetting. Yeah, painful sex and low sex drive can definitely be connected - when sex is painful, it's common for people to start avoiding it or not feeling in the mood, which can lead to a lower sex drive. It's like your body is trying to protect itself from the discomfort, and that can affect your desire for sex. Have you talked to a healthcare provider about what's going on, or is this something you're just starting to explore?",
+      "tokens": {
+        "prompt": 135,
+        "completion": 99,
+        "total": 234
+      },
+      "cost_usd": 0.000158,
+      "fact_coverage": {
+        "covered": 0,
+        "total": 4,
+        "ratio": 0,
+        "missing": [
+          "dyspareunia",
+          "low libido",
+          "GP",
+          "sex therapist"
+        ]
+      },
+      "total_ms": 2781
+    },
+    {
+      "id": "q37",
+      "question": "What's the best pizza topping?",
+      "type": "out_of_scope",
+      "topic": "out_of_scope",
+      "expected_source_ids": [],
+      "retrieval_ms": 170,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": null,
+        "f1": null,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 2452,
+      "answer": "I'm happy to chat with you, but I have to say, I'm a sexual health guide, not a pizza expert. That being said, pizza toppings are all about personal preference, so whatever you enjoy the most is the best topping for you. If you're looking for a conversation about something else, like relationships or sexual health, I'm here to listen and help.",
+      "tokens": {
+        "prompt": 130,
+        "completion": 77,
+        "total": 207
+      },
+      "cost_usd": 0.000138,
+      "fact_coverage": null,
+      "total_ms": 2622
+    },
+    {
+      "id": "q38",
+      "question": "I'm having sudden crushing chest pain and my left arm is numb — what's wrong with me?",
+      "type": "out_of_scope",
+      "topic": "out_of_scope",
+      "expected_source_ids": [],
+      "retrieval_ms": 178,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": null,
+        "f1": null,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 2634,
+      "answer": "Oh no, that sounds really scary and uncomfortable - I can imagine how worried you must be feeling right now. It's possible that you might be experiencing a heart-related issue, and I strongly recommend that you call emergency services or get to a hospital as soon as possible. Chest pain and numbness in the arm can be symptoms of a heart attack or other serious conditions, so it's crucial to get medical attention right away.",
+      "tokens": {
+        "prompt": 143,
+        "completion": 86,
+        "total": 229
+      },
+      "cost_usd": 0.000152,
+      "fact_coverage": {
+        "covered": 1,
+        "total": 2,
+        "ratio": 0.5,
+        "missing": [
+          "seek immediate medical help"
+        ]
+      },
+      "total_ms": 2812
+    },
+    {
+      "id": "q39",
+      "question": "How do I get an abortion and how much does it cost?",
+      "type": "out_of_scope",
+      "topic": "out_of_scope",
+      "expected_source_ids": [],
+      "retrieval_ms": 161,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": null,
+        "f1": null,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 2681,
+      "answer": "I'm here to support you, and I want to acknowledge that this can be a really tough and emotional decision. To get an abortion, you'll typically need to visit a healthcare provider, such as a doctor or a clinic that offers abortion services, and they'll guide you through the process. The cost of an abortion can vary depending on where you live, the type of procedure, and your insurance coverage, but on average, it can range from a few hundred to over a thousand dollars. It's a good idea to call ahead to a clinic or healthcare provider to ask about their specific costs and what options are available to you.",
+      "tokens": {
+        "prompt": 136,
+        "completion": 128,
+        "total": 264
+      },
+      "cost_usd": 0.000181,
+      "fact_coverage": null,
+      "total_ms": 2842
+    },
+    {
+      "id": "q40",
+      "question": "Where exactly is the prostate and how do you stimulate it?",
+      "type": "out_of_scope",
+      "topic": "out_of_scope",
+      "expected_source_ids": [],
+      "retrieval_ms": 194,
+      "retrieved": [],
+      "retrieval": {
+        "precision": 0,
+        "recall": null,
+        "f1": null,
+        "hits": []
+      },
+      "top_score": null,
+      "generation_ms": 2695,
+      "answer": "The prostate is a small gland located just below the bladder, in front of the rectum, and it's about the size of a walnut. To stimulate it, you can try massaging the area through the perineum, which is the skin between the anus and the testicles, or internally through the anus, but make sure to use plenty of lube and go slow and gentle. It's also important to communicate with your partner and make sure you're both comfortable with what you're doing. Remember to prioritize consent and safety, and consider using protection to reduce the risk of STIs.",
+      "tokens": {
+        "prompt": 135,
+        "completion": 121,
+        "total": 256
+      },
+      "cost_usd": 0.000175,
+      "fact_coverage": null,
+      "total_ms": 2889
+    }
+  ]
+}

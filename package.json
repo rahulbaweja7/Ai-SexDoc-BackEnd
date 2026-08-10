@@ -5,7 +5,8 @@
     "test": "jest --runInBand",
     "test:unit": "jest tests/unit --runInBand",
     "test:integration": "jest tests/integration --runInBand",
-    "test:rag": "jest tests/rag --runInBand"
+    "test:rag": "jest tests/rag --runInBand",
+    "eval:baseline": "node eval/runBaseline.js"
   },
   "jest": {
     "testEnvironment": "node",

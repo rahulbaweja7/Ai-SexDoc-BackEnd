@@ -1,0 +1,163 @@
+[
+  {
+    "id": "c00",
+    "text": "The combined oral contraceptive pill contains synthetic versions of oestrogen and progesterone. When taken correctly, it is more than 99% effective at preventing pregnancy. It must be taken at the same time every day to maintain effectiveness.",
+    "source": "NHS",
+    "url": "https://www.nhs.uk/conditions/contraception/combined-contraceptive-pill/",
+    "topic": "contraception"
+  },
+  {
+    "id": "c01",
+    "text": "The progestogen-only pill (mini pill) is over 99% effective when taken correctly. Unlike the combined pill, it does not contain oestrogen, making it suitable for people who cannot take oestrogen-based contraceptives, including breastfeeding individuals.",
+    "source": "NHS",
+    "url": "https://www.nhs.uk/conditions/contraception/progestogen-only-contraceptive-pill/",
+    "topic": "contraception"
+  },
+  {
+    "id": "c02",
+    "text": "Condoms are the only form of contraception that protects against both pregnancy and sexually transmitted infections (STIs). Male condoms are 98% effective when used correctly. Female condoms are 95% effective with perfect use.",
+    "source": "NHS",
+    "url": "https://www.nhs.uk/conditions/contraception/male-condoms/",
+    "topic": "contraception"
+  },
+  {
+    "id": "c03",
+    "text": "Emergency contraception (the morning-after pill) can be used up to 72 hours after unprotected sex, but it is most effective the sooner it is taken. The copper IUD can be used as emergency contraception up to 5 days after unprotected sex and is more than 99% effective.",
+    "source": "NHS",
+    "url": "https://www.nhs.uk/conditions/contraception/emergency-contraception/",
+    "topic": "contraception"
+  },
+  {
+    "id": "c04",
+    "text": "The contraceptive implant is a small flexible rod inserted under the skin of the upper arm. It releases progestogen and is more than 99% effective for up to 3 years. It can be removed at any time if you want to become pregnant or change contraception.",
+    "source": "NHS",
+    "url": "https://www.nhs.uk/conditions/contraception/contraceptive-implant/",
+    "topic": "contraception"
+  },
+  {
+    "id": "c05",
+    "text": "Chlamydia is the most common STI in the UK. It often has no symptoms, which is why regular testing is important. It is easily treated with antibiotics. If left untreated, it can cause serious long-term problems including infertility.",
+    "source": "NHS",
+    "url": "https://www.nhs.uk/conditions/chlamydia/",
+    "topic": "STIs"
+  },
+  {
+    "id": "c06",
+    "text": "Gonorrhoea is a bacterial STI that can infect the genitals, rectum, and throat. Symptoms include unusual discharge and pain when urinating, but many people have no symptoms. It is treated with antibiotics, though antibiotic-resistant strains are increasingly common.",
+    "source": "NHS",
+    "url": "https://www.nhs.uk/conditions/gonorrhoea/",
+    "topic": "STIs"
+  },
+  {
+    "id": "c07",
+    "text": "HIV is a virus that weakens the immune system. It is transmitted through blood, semen, vaginal fluid, and breast milk. With modern antiretroviral treatment, people with HIV can live long, healthy lives and have an undetectable viral load, meaning they cannot pass the virus on to sexual partners.",
+    "source": "NHS",
+    "url": "https://www.nhs.uk/conditions/hiv-and-aids/",
+    "topic": "STIs"
+  },
+  {
+    "id": "c08",
+    "text": "PrEP (pre-exposure prophylaxis) is a medicine taken by HIV-negative people to prevent getting HIV. When taken as prescribed, PrEP is highly effective — reducing the risk of getting HIV from sex by about 99%. It does not protect against other STIs.",
+    "source": "Planned Parenthood",
+    "url": "https://www.plannedparenthood.org/learn/stds-hiv-safer-sex/hiv-aids/prep",
+    "topic": "STIs"
+  },
+  {
+    "id": "c09",
+    "text": "Herpes is caused by the herpes simplex virus (HSV). There are two types: HSV-1 (usually causes cold sores) and HSV-2 (usually causes genital herpes). There is no cure, but antiviral medication can reduce the frequency and severity of outbreaks and reduce transmission risk.",
+    "source": "NHS",
+    "url": "https://www.nhs.uk/conditions/genital-herpes/",
+    "topic": "STIs"
+  },
+  {
+    "id": "c10",
+    "text": "STI testing is recommended every 3 to 6 months if you have multiple sexual partners, or any time you have unprotected sex with a new partner. Many STIs have no symptoms, so the only way to know your status is to get tested. Most sexual health clinics offer free, confidential testing.",
+    "source": "Planned Parenthood",
+    "url": "https://www.plannedparenthood.org/learn/stds-hiv-safer-sex/get-tested",
+    "topic": "STIs"
+  },
+  {
+    "id": "c11",
+    "text": "The menstrual cycle typically lasts 28 days but can range from 21 to 40 days and still be considered normal. Ovulation usually occurs around day 14 of a 28-day cycle. Irregular periods can be caused by stress, weight changes, hormonal conditions like PCOS, or thyroid issues.",
+    "source": "NHS",
+    "url": "https://www.nhs.uk/conditions/periods/",
+    "topic": "anatomy"
+  },
+  {
+    "id": "c12",
+    "text": "The hymen is a thin membrane that partially covers the vaginal opening in some people. It is a myth that an intact hymen proves virginity — the hymen can stretch or tear through activities other than sex, and some people are born with very little hymenal tissue.",
+    "source": "Planned Parenthood",
+    "url": "https://www.plannedparenthood.org/learn/virginity/virginity",
+    "topic": "anatomy"
+  },
+  {
+    "id": "c13",
+    "text": "The clitoris is much larger than the small external tip that is visible. It extends internally and is shaped like a wishbone, with two legs reaching down alongside the vaginal canal. The full clitoris can be up to 10cm long and plays a central role in sexual pleasure.",
+    "source": "Planned Parenthood",
+    "url": "https://www.plannedparenthood.org/learn/sexual-pleasure-and-feelings/sexual-pleasure",
+    "topic": "anatomy"
+  },
+  {
+    "id": "c14",
+    "text": "Consent must be freely given, reversible, informed, enthusiastic, and specific. Someone cannot consent if they are asleep, unconscious, intoxicated, or being pressured. Consent to one activity does not mean consent to others, and consent can be withdrawn at any time.",
+    "source": "Planned Parenthood",
+    "url": "https://www.plannedparenthood.org/learn/relationships/sexual-consent",
+    "topic": "relationships"
+  },
+  {
+    "id": "c15",
+    "text": "Healthy relationships involve mutual respect, trust, honesty, and open communication. Both partners should feel safe to express their feelings and boundaries. Signs of an unhealthy relationship include controlling behaviour, jealousy, pressure, and disrespect for boundaries.",
+    "source": "Planned Parenthood",
+    "url": "https://www.plannedparenthood.org/learn/relationships/healthy-relationships",
+    "topic": "relationships"
+  },
+  {
+    "id": "c16",
+    "text": "Lubricants can make sex more comfortable and pleasurable. Water-based lubricants are safe to use with condoms and sex toys. Oil-based lubricants can degrade latex condoms, increasing the risk of them breaking. Silicone-based lubricants last longer but should not be used with silicone toys.",
+    "source": "Planned Parenthood",
+    "url": "https://www.plannedparenthood.org/learn/sexual-pleasure-and-feelings/sexual-pleasure",
+    "topic": "sexual health"
+  },
+  {
+    "id": "c17",
+    "text": "Painful sex (dyspareunia) is common and can affect people of any gender. Causes include insufficient lubrication, infections, skin conditions, vaginismus (involuntary tightening of vaginal muscles), endometriosis, or psychological factors. A GP or sexual health clinic can help identify and treat the cause.",
+    "source": "NHS",
+    "url": "https://www.nhs.uk/conditions/painful-sex-dyspareunia/",
+    "topic": "sexual health"
+  },
+  {
+    "id": "c18",
+    "text": "Low libido (reduced sex drive) is very common and can be caused by stress, relationship problems, hormonal changes, depression, or medications such as antidepressants. It is not a problem unless it is causing distress. Speaking to a GP or sex therapist can help.",
+    "source": "NHS",
+    "url": "https://www.nhs.uk/conditions/loss-of-libido/",
+    "topic": "sexual health"
+  },
+  {
+    "id": "c19",
+    "text": "Erectile dysfunction (difficulty getting or maintaining an erection) affects around 50% of men aged 40 to 70 to some degree. It can be caused by physical factors like cardiovascular disease or diabetes, or psychological factors like anxiety and stress. It is treatable and nothing to be ashamed of.",
+    "source": "NHS",
+    "url": "https://www.nhs.uk/conditions/erection-problems-erectile-dysfunction/",
+    "topic": "sexual health"
+  },
+  {
+    "id": "c20",
+    "text": "Pregnancy tests work by detecting hCG (human chorionic gonadotropin), a hormone produced after a fertilised egg implants in the uterus. Home pregnancy tests are reliable from the first day of a missed period. Testing too early may give a false negative result.",
+    "source": "NHS",
+    "url": "https://www.nhs.uk/pregnancy/trying-for-a-baby/how-to-tell-if-youre-pregnant/",
+    "topic": "pregnancy"
+  },
+  {
+    "id": "c21",
+    "text": "Fertility naturally declines with age. People with ovaries have the most fertile years in their 20s. Fertility starts to decline more sharply after age 35. However, many people conceive naturally in their late 30s and early 40s. Fertility treatments like IVF are available if natural conception is difficult.",
+    "source": "NHS",
+    "url": "https://www.nhs.uk/conditions/infertility/",
+    "topic": "pregnancy"
+  },
+  {
+    "id": "c22",
+    "text": "Gender identity is a person's internal sense of their own gender, which may or may not align with the sex they were assigned at birth. Sexual orientation refers to who someone is attracted to. These are separate and independent aspects of identity.",
+    "source": "Planned Parenthood",
+    "url": "https://www.plannedparenthood.org/learn/sexual-orientation-gender",
+    "topic": "identity"
+  }
+]
